@@ -25,6 +25,18 @@ DefinitionBlock ("", "SSDT", 2, "LEON", "RMB3", 0x00000000)
     Device (_SB.PCI0.RMB3)
     {
         Name (_HID, "RMB30000")  // _HID: Hardware ID
+        Method (_STA, 0, NotSerialized)  // _STA: Status
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (0x0F)
+            }
+            Else
+            {
+                Return (Zero)
+            }
+        }
+
         Method (_INI, 0, NotSerialized)  // _INI: Initialize
         {
             Store (0x03, ^^B0D3.D3HT) /* \_SB_.PCI0.B0D3.D3HT */

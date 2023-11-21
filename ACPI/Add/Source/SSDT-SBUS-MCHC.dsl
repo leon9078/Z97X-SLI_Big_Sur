@@ -14,8 +14,10 @@ DefinitionBlock ("", "SSDT", 2, "ACDT", "MCHCSBUS", 0x00000000)
                 {
                     Return (0x0F)
                 }
-
-                Return (Zero)
+                Else
+                {
+                    Return (Zero)
+                }
             }
         }
     }
@@ -38,8 +40,10 @@ DefinitionBlock ("", "SSDT", 2, "ACDT", "MCHCSBUS", 0x00000000)
                 {
                     Return (0x0F)
                 }
-
-                Return (Zero)
+                Else
+                {
+                    Return (Zero)
+                }
             }
         }
     }
