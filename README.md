@@ -26,6 +26,16 @@ RC6(Render Standby): Disabled
 
 For USB installer use EFI_USB.zip, for Target SATA drive use EFI.zip
 
+To flash the FPT bootable file
+
+In macOS/Linux
+
+$ sudo cp "path/to/Z97XSLI.img" /dev/sdX
+$ sudo sync
+
+In Windows flash it with Rufus, select Z97XSLI.vhd file
+
+
 
 Post install
 
