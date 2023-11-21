@@ -1,3 +1,23 @@
+/*
+ * Intel ACPI Component Architecture
+ * AML/ASL+ Disassembler version 20200925 (64-bit version)
+ * Copyright (c) 2000 - 2020 Intel Corporation
+ * 
+ * Disassembling to non-symbolic legacy ASL operators
+ *
+ * Disassembly of SSDT-UsbMap.aml, Tue Nov 21 15:38:19 2023
+ *
+ * Original Table Header:
+ *     Signature        "SSDT"
+ *     Length           0x00000973 (2419)
+ *     Revision         0x02
+ *     Checksum         0x7C
+ *     OEM ID           "hack"
+ *     OEM Table ID     "UsbMap"
+ *     OEM Revision     0x00000000 (0)
+ *     Compiler ID      "INTL"
+ *     Compiler Version 0x20200925 (538970405)
+ */
 DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
 {
     External (_SB_.PCI0.XHC_.RHUB, DeviceObj)
@@ -216,7 +236,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 {
                     If (_OSI ("Darwin"))
                     {
-                        Return (GUPC (Zero, 0xFF))
+                        Return (GUPC (Zero, Zero))
                     }
                     Else
                     {
@@ -383,3 +403,4 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
         }
     }
 }
+
