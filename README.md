@@ -25,3 +25,12 @@ Wake on LAN: Disabled
 RC6(Render Standby): Disabled
 
 For USB installer use EFI_USB.zip, for Target SATA drive use EFI.zip
+
+
+Post install
+
+In Terminal, type
+
+% sudo pmset womp 0 (Disable Wake on LAN in macOS)
+% sudo pmset autopoweroff 0 (Disable a lower power chipset sleep. Put the PC in ACPI S5...)
+% sudo pmset ttyskeepawake 0 (Disable idle system sleep when any tty (e.g. remote login session) is 'active')
