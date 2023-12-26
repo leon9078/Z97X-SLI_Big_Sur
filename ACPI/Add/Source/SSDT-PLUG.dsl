@@ -14,7 +14,7 @@ DefinitionBlock ("", "SSDT", 2, "ACDT", "CpuPlug", 0x00000000)
 
         Return (Package (0x02)
         {
-            "plugin-type", 
+            "plugin-type",
             One
         })
     }

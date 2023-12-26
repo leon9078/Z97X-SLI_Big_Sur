@@ -1,23 +1,3 @@
-/*
- * Intel ACPI Component Architecture
- * AML/ASL+ Disassembler version 20200925 (64-bit version)
- * Copyright (c) 2000 - 2020 Intel Corporation
- * 
- * Disassembling to non-symbolic legacy ASL operators
- *
- * Disassembly of SSDT-UsbMap.aml, Tue Nov 21 15:38:19 2023
- *
- * Original Table Header:
- *     Signature        "SSDT"
- *     Length           0x00000973 (2419)
- *     Revision         0x02
- *     Checksum         0x7C
- *     OEM ID           "hack"
- *     OEM Table ID     "UsbMap"
- *     OEM Revision     0x00000000 (0)
- *     Compiler ID      "INTL"
- *     Compiler Version 0x20200925 (538970405)
- */
 DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
 {
     External (_SB_.PCI0.XHC_.RHUB, DeviceObj)
@@ -71,38 +51,131 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
             Store (Arg1, Index (^UPCN, One))
             Return (^UPCN) /* External reference */
         }
+    }
 
-        Scope (HS01)
+    Scope (_SB.PCI0.XHC.RHUB.HS01)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
         {
-            Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+            If (_OSI ("Darwin"))
             {
-                If (_OSI ("Darwin"))
-                {
-                    Return (GUPC (Zero, 0x03))
-                }
-                Else
-                {
-                    Return (^ZUPC ())
-                }
+                Return (GUPC (Zero, 0x03))
+            }
+            Else
+            {
+                Return (^ZUPC ())
             }
         }
+    }
 
-        Scope (HS02)
+    Scope (_SB.PCI0.XHC.RHUB.HS02)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
         {
-            Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+            If (_OSI ("Darwin"))
             {
-                If (_OSI ("Darwin"))
-                {
-                    Return (GUPC (Zero, 0x03))
-                }
-                Else
-                {
-                    Return (^ZUPC ())
-                }
+                Return (GUPC (Zero, 0x03))
+            }
+            Else
+            {
+                Return (^ZUPC ())
             }
         }
+    }
 
-        Scope (HS03)
+    Scope (_SB.PCI0.XHC.RHUB.HS03)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (0xFF, 0x03))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    Scope (_SB.PCI0.XHC.RHUB.HS04)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (0xFF, 0x03))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    Scope (_SB.PCI0.XHC.RHUB.HS05)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (0xFF, Zero))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    Scope (_SB.PCI0.XHC.RHUB.HS06)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (0xFF, Zero))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    Scope (_SB.PCI0.XHC.RHUB.HS07)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (0xFF, Zero))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    Scope (_SB.PCI0.XHC.RHUB.HS08)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (0xFF, Zero))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS09))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.HS09)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
@@ -116,8 +189,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        Scope (HS04)
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS10))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.HS10)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
@@ -131,8 +207,29 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        Scope (HS05)
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS11))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.HS11)
+        {
+            Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+            {
+                If (_OSI ("Darwin"))
+                {
+                    Return (GUPC (Zero, Zero))
+                }
+                Else
+                {
+                    Return (^ZUPC ())
+                }
+            }
+        }
+    }
+
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS12))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.HS12)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
@@ -146,8 +243,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        Scope (HS06)
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS13))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.HS13)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
@@ -161,8 +261,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        Scope (HS07)
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS14))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.HS14)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
@@ -176,14 +279,47 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        Scope (HS08)
+    Scope (_SB.PCI0.XHC.RHUB.SSP1)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (Zero, 0x03))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    Scope (_SB.PCI0.XHC.RHUB.SSP2)
+    {
+        Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (GUPC (Zero, 0x03))
+            }
+            Else
+            {
+                Return (^ZUPC ())
+            }
+        }
+    }
+
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP3))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.SSP3)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
                 If (_OSI ("Darwin"))
                 {
-                    Return (GUPC (0xFF, Zero))
+                    Return (GUPC (0xFF, 0x03))
                 }
                 Else
                 {
@@ -191,122 +327,17 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS09))
-        {
-            Scope (HS09)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, 0x03))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS10))
-        {
-            Scope (HS10)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, 0x03))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS11))
-        {
-            Scope (HS11)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (Zero, Zero))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS12))
-        {
-            Scope (HS12)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, Zero))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS13))
-        {
-            Scope (HS13)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, Zero))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.HS14))
-        {
-            Scope (HS14)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, Zero))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        Scope (SSP1)
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP4))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.SSP4)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
                 If (_OSI ("Darwin"))
                 {
-                    Return (GUPC (Zero, 0x03))
+                    Return (GUPC (0xFF, 0x03))
                 }
                 Else
                 {
@@ -314,14 +345,17 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        Scope (SSP2)
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP5))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.SSP5)
         {
             Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
                 If (_OSI ("Darwin"))
                 {
-                    Return (GUPC (Zero, 0x03))
+                    Return (GUPC (0xFF, 0x03))
                 }
                 Else
                 {
@@ -329,78 +363,23 @@ DefinitionBlock ("", "SSDT", 2, "hack", "UsbMap", 0x00000000)
                 }
             }
         }
+    }
 
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP3))
+    If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP6))
+    {
+        Scope (_SB.PCI0.XHC.RHUB.SSP6)
         {
-            Scope (SSP3)
+            Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
             {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+                If (_OSI ("Darwin"))
                 {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, 0x03))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
+                    Return (GUPC (0xFF, 0x03))
                 }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP4))
-        {
-            Scope (SSP4)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
+                Else
                 {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, 0x03))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP5))
-        {
-            Scope (SSP5)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, 0x03))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
-                }
-            }
-        }
-
-        If (CondRefOf (\_SB.PCI0.XHC.RHUB.SSP6))
-        {
-            Scope (SSP6)
-            {
-                Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
-                {
-                    If (_OSI ("Darwin"))
-                    {
-                        Return (GUPC (0xFF, 0x03))
-                    }
-                    Else
-                    {
-                        Return (^ZUPC ())
-                    }
+                    Return (^ZUPC ())
                 }
             }
         }
     }
 }
-

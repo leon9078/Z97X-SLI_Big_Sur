@@ -1,23 +1,27 @@
-DefinitionBlock ("", "SSDT", 2, "LEON", "RMB3", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "hack", "RMB3", 0x00000000)
 {
     External (_SB_.PCI0, DeviceObj)
     External (_SB_.PCI0.B0D3, DeviceObj)
+    External (_SB_.PCI0.B0D3.RPCZ, OpRegionObj)
+    External (_SB_.PCI0.HBUS, OpRegionObj)
+    External (HBUS, OpRegionObj)
+    External (RPCZ, OpRegionObj)
 
     Scope (_SB.PCI0)
     {
-        OperationRegion (ZBUS, PCI_Config, 0x54, 0x04)
-        Field (ZBUS, DWordAcc, NoLock, Preserve)
+        Field (HBUS, DWordAcc, NoLock, Preserve)
         {
-                ,   5, 
+            Offset (0x54),
+                ,   5,
             D3EN,   1
         }
     }
 
     Scope (_SB.PCI0.B0D3)
     {
-        OperationRegion (ZPCZ, PCI_Config, 0x54, 0x04)
-        Field (ZPCZ, DWordAcc, Lock, Preserve)
+        Field (RPCZ, DWordAcc, Lock, Preserve)
         {
+            Offset (0x54),
             D3HT,   2
         }
     }

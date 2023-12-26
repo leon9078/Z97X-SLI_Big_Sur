@@ -10,11 +10,14 @@ DefinitionBlock ("", "SSDT", 2, "hack", "GPRW", 0x00000000)
     External (_SB_.PCI0.HDEF.ZPRW, MethodObj)    // 0 Arguments
     External (PRWP, PkgObj)
 
-    Method (GPRW, 2, NotSerialized)
+    Scope (\)
     {
-        Store (Arg0, Index (PRWP, Zero))
-        Store (Arg1, Index (PRWP, One))
-        Return (PRWP) /* External reference */
+        Method (GPRW, 2, NotSerialized)
+        {
+            Store (Arg0, Index (PRWP, Zero))
+            Store (Arg1, Index (PRWP, One))
+            Return (PRWP) /* External reference */
+        }
     }
 
     Scope (_SB.PCI0.GLAN)
