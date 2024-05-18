@@ -1,30 +1,29 @@
 # Z97X-SLI_Big_Sur
 hackintosh stuff
-Update to the latest beta BIOS (F10b), because it has this important bug fix: "Fix memory compatibility"
+
+Pre requirement: Update to the latest beta BIOS (F10b), because it has this important bug fix: "Fix memory compatibility"
 
 BIOS settings:
 
-Intel(R) Turbo Boost Technology: Enabled
-Extreme Memory Profile(X.M.P.): Profile1
-Bootup NumLock State: Disabled
-Full Screen LOGO Show: Disabled
-Windows 8 Features: Windows 8 WHQL
-CSM Support: Never
-Boot Mode Selection: UEFI Only
-Storage Boot Option Control: UEFI Only
-Ipv4 PXE Support: Disabled
-Ipv6 PXE Support: Disabled
-Secure Boot: Disabled
-Initial Display Output: IGFX
-XHCI Mode: Enabled
-Legacy USB Support: Disabled
-Serial Port A: Disabled
-Parallel Port: Disabled
-Intel(R) Ethernet Network Connection i217-V - 74:D4:35:E6:42:2C => NIC Configuration => Wake on LAN: Disabled
-Wake on LAN: Disabled
-RC6(Render Standby): Disabled
+- Extreme Memory Profile(X.M.P.): Profile1
+- Bootup NumLock State: Disabled
+- Full Screen LOGO Show: Disabled
+- Windows 8 Features: Windows 8
+- CSM Support: Always
+- Boot Mode Selection: UEFI Only
+- Storage Boot Option Control: UEFI Only
+- Ipv4 PXE Support: Disabled
+- Ipv6 PXE Support: Disabled
+- Secure Boot: Disabled
+- XHCI Mode: Enabled
+- Legacy USB Support: Disabled
+- Serial Port A: Disabled
+- Parallel Port: Disabled
+- Intel(R) Ethernet Network Connection i217-V - <MAC Address> => NIC Configuration => Wake on LAN: Disabled
+- Wake on LAN: Disabled
+- RC6(Render Standby): Disabled
 
-For USB installer use EFI_USB.zip, for Target SATA drive use EFI.zip
+For USB installer, in OC config.plist change Misc > Security > ScanPolicy value to 0.
 
 To flash the FPT bootable file
 

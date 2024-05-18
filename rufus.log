@@ -40,15 +40,17 @@ Format completed.
 Writing Master Boot Record...
 Set bootable USB partition as 0x80
 Using Windows 7 MBR
-Found volume \\?\Volume{186dcb02-a4d2-11ee-a1dc-ccaf74b634d9}\
-Opened \\?\Volume{186dcb02-a4d2-11ee-a1dc-ccaf74b634d9} for exclusive write access
+Found volume \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673}\
+Notice: Volume Device Path is \Device\HarddiskVolume3
+Waiting for access on \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673}...
+Opened \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673} for exclusive write access
 Writing Partition Boot Record...
 Using Standard FAT32 partition boot record
 Confirmed new volume has a primary FAT32 boot sector
 Setting primary FAT32 boot sector for boot...
 Confirmed new volume has a secondary FAT32 boot sector
 Setting secondary FAT32 boot sector for boot...
-Successfully remounted \\?\Volume{186dcb02-a4d2-11ee-a1dc-ccaf74b634d9}\ as D:
+Successfully remounted \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673}\ as D:
 Copying DOS files...
 Patching COMMAND.COM...
 Successfully wrote 'D:\COMMAND.COM' (93040 bytes)
@@ -76,7 +78,7 @@ Found VHD device 'Msft Virtual Disk SCSI Disk Device'
 Disk type: FIXED, Disk size: 38 MB, Sector size: 512 bytes
 Cylinders: 4, Tracks per cylinder: 255, Sectors per track: 63
 Partition type: MBR, NB Partitions: 1
-Disk ID: 0x0007539C
+Disk ID: 0x000415A7
 Drive has a Windows 7 Master Boot Record
 Partition 1:
   Type: FAT32 LBA (0x0c)

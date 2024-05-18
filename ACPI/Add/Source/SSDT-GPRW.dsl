@@ -1,4 +1,4 @@
-DefinitionBlock ("", "SSDT", 2, "hack", "GPRW", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "HACK", "GPRW", 0x00000000)
 {
     External (_SB_.PCI0.EH01, DeviceObj)
     External (_SB_.PCI0.EH01.ZPRW, MethodObj)    // 0 Arguments
@@ -9,6 +9,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "GPRW", 0x00000000)
     External (_SB_.PCI0.HDEF, DeviceObj)
     External (_SB_.PCI0.HDEF.ZPRW, MethodObj)    // 0 Arguments
     External (PRWP, PkgObj)
+    External (ZPRW, MethodObj)    // 0 Arguments
 
     Scope (\)
     {
@@ -16,11 +17,18 @@ DefinitionBlock ("", "SSDT", 2, "hack", "GPRW", 0x00000000)
         {
             Store (Arg0, Index (PRWP, Zero))
             Store (Arg1, Index (PRWP, One))
-            Return (PRWP) /* External reference */
+            If (_OSI ("Darwin"))
+            {
+                Return (PRWP) /* External reference */
+            }
+            Else
+            {
+                Return (ZPRW ())
+            }
         }
     }
 
-    Scope (_SB.PCI0.GLAN)
+    Scope (\_SB.PCI0.EH01)
     {
         Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
         {
@@ -35,7 +43,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "GPRW", 0x00000000)
         }
     }
 
-    Scope (_SB.PCI0.EH01)
+    Scope (\_SB.PCI0.EH02)
     {
         Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
         {
@@ -50,7 +58,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "GPRW", 0x00000000)
         }
     }
 
-    Scope (_SB.PCI0.EH02)
+    Scope (\_SB.PCI0.GLAN)
     {
         Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
         {
@@ -65,7 +73,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "GPRW", 0x00000000)
         }
     }
 
-    Scope (_SB.PCI0.HDEF)
+    Scope (\_SB.PCI0.HDEF)
     {
         Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
         {
