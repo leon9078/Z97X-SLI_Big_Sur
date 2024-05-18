@@ -19,7 +19,7 @@ BIOS settings:
 - Legacy USB Support: Disabled
 - Serial Port A: Disabled
 - Parallel Port: Disabled
-- Intel(R) Ethernet Network Connection i217-V - <MAC Address> => NIC Configuration => Wake on LAN: Disabled
+- Intel(R) Ethernet Network Connection i217-V => NIC Configuration => Wake on LAN: Disabled
 - Wake on LAN: Disabled
 - RC6(Render Standby): Disabled
 
@@ -29,8 +29,8 @@ To flash the FPT bootable file
 
 In macOS/Linux
 
-$ sudo cp "path/to/Z97XSLI.img" /dev/sdX
-$ sudo sync
+1. sudo cp "path/to/Z97XSLI.img" /dev/sdX
+2. sudo sync
 
 In Windows flash it with Rufus, select Z97XSLI.vhd file
 
@@ -40,6 +40,4 @@ Post install
 
 In Terminal, type
 
-% sudo pmset womp 0 (Disable Wake on LAN in macOS)
-% sudo pmset autopoweroff 0 (Disable a lower power chipset sleep. Put the PC in ACPI S5...)
-% sudo pmset ttyskeepawake 0 (Disable idle system sleep when any tty (e.g. remote login session) is 'active')
+% sudo pmset womp 0 autopoweroff 0 ttyskeepawake 0
