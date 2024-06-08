@@ -15,7 +15,6 @@ BIOS settings:
 - Ipv4 PXE Support: Disabled
 - Ipv6 PXE Support: Disabled
 - Secure Boot: Disabled
-- XHCI Mode: Enabled
 - Legacy USB Support: Disabled
 - Serial Port A: Disabled
 - Parallel Port: Disabled
