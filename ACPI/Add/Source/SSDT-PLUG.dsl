@@ -1,4 +1,4 @@
-DefinitionBlock ("", "SSDT", 2, "ACDT", "PLUG", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "HACK", "PLUG", 0x00000000)
 {
     External (_PR_.CPU0, ProcessorObj)
 

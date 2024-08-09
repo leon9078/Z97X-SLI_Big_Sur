@@ -1,4 +1,4 @@
-DefinitionBlock ("", "SSDT", 2, "ACDT", "EC", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "HACK", "EC", 0x00000000)
 {
     External (_SB_.PCI0.LPCB, DeviceObj)
 

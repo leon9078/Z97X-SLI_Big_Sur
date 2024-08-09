@@ -45,11 +45,18 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
 
     Scope (\_SB.PCI0.XHC.RHUB)
     {
-        Method (GUPC, 2, Serialized)
+        Method (GUPC, 2, NotSerialized)
         {
-            Store (Arg0, Index (^UPCN, Zero))
-            Store (Arg1, Index (^UPCN, One))
-            Return (^UPCN) /* External reference */
+            Store (Arg0, Index (UPCN, Zero))
+            Store (Arg1, Index (UPCN, One))
+            If (_OSI ("Darwin"))
+            {
+                Return (^UPCN) /* External reference */
+            }
+            Else
+            {
+                Return (Zero)
+            }
         }
     }
 
@@ -63,7 +70,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -78,7 +85,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -93,7 +100,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -108,7 +115,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -123,7 +130,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -138,7 +145,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -153,7 +160,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -168,7 +175,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -185,7 +192,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -203,7 +210,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -221,7 +228,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -239,7 +246,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -257,7 +264,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -275,7 +282,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -291,7 +298,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -306,7 +313,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
             }
             Else
             {
-                Return (^ZUPC ())
+                Return (ZUPC ())
             }
         }
     }
@@ -323,7 +330,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -341,7 +348,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -359,7 +366,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }
@@ -377,7 +384,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "UsbMap", 0x00000000)
                 }
                 Else
                 {
-                    Return (^ZUPC ())
+                    Return (ZUPC ())
                 }
             }
         }

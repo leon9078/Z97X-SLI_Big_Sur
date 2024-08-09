@@ -7,18 +7,6 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHCfixes", 0x00000000)
 
     Scope (\_SB.PCI0.XHC)
     {
-        Method (ESEL, 0, Serialized)
-        {
-            If (_OSI ("Darwin"))
-            {
-                Return (Zero)
-            }
-            Else
-            {
-                Return (^ESEZ ())
-            }
-        }
-
         Method (XSEL, 0, Serialized)
         {
             If (_OSI ("Darwin"))
@@ -27,7 +15,19 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHCfixes", 0x00000000)
             }
             Else
             {
-                Return (^XSEZ ())
+                Return (XSEZ ())
+            }
+        }
+
+        Method (ESEL, 0, Serialized)
+        {
+            If (_OSI ("Darwin"))
+            {
+                Return (Zero)
+            }
+            Else
+            {
+                Return (ESEZ ())
             }
         }
 
@@ -39,7 +39,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHCfixes", 0x00000000)
             }
             Else
             {
-                Return (^XWAZ ())
+                Return (XWAZ ())
             }
         }
     }

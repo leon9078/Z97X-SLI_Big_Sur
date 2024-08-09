@@ -1,4 +1,4 @@
-DefinitionBlock ("", "SSDT", 2, "ACDT", "NVAU", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "HACK", "NVAU", 0x00000000)
 {
     External (_SB_.PCI0.PEG0, DeviceObj)
 

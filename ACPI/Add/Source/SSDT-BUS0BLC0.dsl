@@ -1,4 +1,4 @@
-DefinitionBlock ("", "SSDT", 2, "ACDT", "BUS0BLC0", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "HACK", "BUS0BLC0", 0x00000000)
 {
     External (_SB_.PCI0.SBUS, DeviceObj)
 

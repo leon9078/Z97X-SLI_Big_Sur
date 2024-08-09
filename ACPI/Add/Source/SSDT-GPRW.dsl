@@ -11,15 +11,13 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "GPRW", 0x00000000)
     External (PRWP, PkgObj)
     External (ZPRW, MethodObj)    // 0 Arguments
 
-    Scope (\)
+    Scope (\_SB.PCI0.GLAN)
     {
-        Method (GPRW, 2, NotSerialized)
+        Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
         {
-            Store (Arg0, Index (PRWP, Zero))
-            Store (Arg1, Index (PRWP, One))
             If (_OSI ("Darwin"))
             {
-                Return (PRWP) /* External reference */
+                Return (GPRW (0x0D, Zero))
             }
             Else
             {
@@ -38,7 +36,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "GPRW", 0x00000000)
             }
             Else
             {
-                Return (^ZPRW ())
+                Return (ZPRW ())
             }
         }
     }
@@ -53,22 +51,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "GPRW", 0x00000000)
             }
             Else
             {
-                Return (^ZPRW ())
-            }
-        }
-    }
-
-    Scope (\_SB.PCI0.GLAN)
-    {
-        Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
-        {
-            If (_OSI ("Darwin"))
-            {
-                Return (GPRW (0x0D, Zero))
-            }
-            Else
-            {
-                Return (^ZPRW ())
+                Return (ZPRW ())
             }
         }
     }
@@ -83,7 +66,24 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "GPRW", 0x00000000)
             }
             Else
             {
-                Return (^ZPRW ())
+                Return (ZPRW ())
+            }
+        }
+    }
+
+    Scope (\)
+    {
+        Method (GPRW, 2, NotSerialized)
+        {
+            Store (Arg0, Index (PRWP, Zero))
+            Store (Arg1, Index (PRWP, One))
+            If (_OSI ("Darwin"))
+            {
+                Return (PRWP) /* External reference */
+            }
+            Else
+            {
+                Return (ZPRW ())
             }
         }
     }
