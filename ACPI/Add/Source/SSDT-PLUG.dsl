@@ -4,7 +4,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "PLUG", 0x00000000)
 
     If (CondRefOf (\_PR.CPU0))
     {
-        If (LEqual (ObjectType (\_PR.CPU0), 0x0C))
+        If ((ObjectType (\_PR.CPU0) == 0x0C))
         {
             Scope (\_PR.CPU0)
             {
@@ -12,7 +12,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "PLUG", 0x00000000)
                 {
                     Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
                     {
-                        If (LEqual (Arg2, Zero))
+                        If ((Arg2 == Zero))
                         {
                             Return (Buffer (One)
                             {

@@ -21,7 +21,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "NVAU", 0x00000000)
 
             Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
             {
-                If (LEqual (Arg2, Zero))
+                If ((Arg2 == Zero))
                 {
                     Return (Buffer (One)
                     {

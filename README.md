@@ -3,6 +3,11 @@ hackintosh stuff
 
 Pre requirement: Update to the latest beta BIOS (F10b), because it has this important bug fix: "Fix memory compatibility"
 
+The provided .img/.vhd image files have the following edits, done by me using UEFITool software:
+
+1) Updated the CPU microcode version to the latest revision: 0x28
+2) Updated Intel GbE region with the my specific MAC Address
+
 BIOS settings:
 
 - Extreme Memory Profile(X.M.P.): Profile1
@@ -22,8 +27,6 @@ BIOS settings:
 - Wake on LAN: Disabled
 - RC6(Render Standby): Disabled
 
-For USB installer, in OC config.plist change Misc > Security > ScanPolicy value to 0.
-
 To flash the FPT bootable file
 
 In macOS/Linux
@@ -33,10 +36,47 @@ In macOS/Linux
 
 In Windows flash it with Rufus, select Z97XSLI.vhd file
 
+Post install:
 
+Insert Arch Linux USB installer, boot from it F12 key
 
-Post install
+- setfont ter-i16b
+- lsblk
+- mount /dev/sdX1 /mnt
+- nano -c /mnt/EFI/OC/config.plist
 
-In Terminal, type
+Replace "LauncherOption" value from "Disabled" to "Full"
+Replace "ScanPolicy" value  from "0" to "65795"
 
-% sudo pmset womp 0 autopoweroff 0 ttyskeepawake 0
+Save (Ctrl+O), then exit (Ctrl+X)
+- systemctl reboot
+
+Unplug the Arch installer USB drive, boot to OpenCore, but at the menu press TAB key twice to select Reboot
+
+Reinsert to Arch USB drive, now F12 key > boot back to the Arch USB
+
+- setfont ter-i16b
+- efibootmgr
+
+You should have three entries:
+Boot0001 is "UEFI OS" (EFI\BOOT\BOOTx64.efi)
+Boot0002 is "OpenCore" (EFI\OC\OpenCore.efi)
+Boot0003 is "UEFI:" (Arch USB)
+
+What we need to do is manually change the order of those entries to have OpenCore first, then UEFI OS:
+
+- efibootmgr -O #Delete Boot Order
+- cp /sys/firmware/efi/efivars/Boot0001* /sys/firmware/efi/efivars/Boot0004*
+- efibootmgr #Verify duplicate entry has been added
+- efibootmgr -Bb 0001
+- cp /sys/firmware/efi/efivars/Boot0002* /sys/firmware/efi/efivars/Boot0001*
+- efibootmgr
+- efibootmgr -Bb 0002
+- cp /sys/firmware/efi/efivars/Boot0004* /sys/firmware/efi/efivars/Boot0002*
+- efibootmgr
+- efibootmgr -Bb 0004
+- efibootmgr -Bb 0003
+- efibootmgr -o 0001,0002
+- systemctl reboot
+
+Unplug Arch Linux USB installer drive, done. Enojy your new hackintosh
