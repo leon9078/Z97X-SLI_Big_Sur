@@ -1,0 +1,75 @@
+
+Intel ACPI Component Architecture
+ASL+ Optimizing Compiler/Disassembler version 20240927 (64-bit version)
+Copyright (c) 2000 - 2023 Intel Corporation
+
+Compilation of "SSDT-EC.asl"
+       1:  DefinitionBlock ("SSDT-EC.aml", "SSDT", 2, "HACK", "EC__", 0x00000000)
+
+00000000:  53 53 44 54 7B 00 00 00     "SSDT{..."
+00000008:  02 50 48 41 43 4B 00 00     ".PHACK.."
+00000010:  45 43 5F 5F 00 00 00 00     "EC__...."
+00000018:  00 00 00 00 49 4E 54 4C     "....INTL"
+00000020:  27 09 24 20 ............    "'.$ "
+00000024:  A0 14 00 ...............    "..."
+00000027:  15 5C 2F 03 5F 53 42 5F     ".\/._SB_"
+0000002F:  50 43 49 30 4C 50 43 42     "PCI0LPCB"
+00000037:  06 00 ..................    ".."
+
+       2:  {
+       3:      External (_SB_.PCI0.LPCB, DeviceObj)
+       5:      Scope (\_SB.PCI0.LPCB)
+
+00000039:  10 41 04 5C 2F 03 5F 53     ".A.\/._S"
+00000041:  42 5F 50 43 49 30 4C 50     "B_PCI0LP"
+00000049:  43 42 ..................    "CB"
+
+       6:      {
+       7:          Device (EC)
+
+0000004B:  5B 82 2E 45 43 5F 5F ...    "[..EC__"
+
+       8:          {
+       9:              Name (_HID, "ACID0001")  // _HID: Hardware ID
+
+00000052:  08 5F 48 49 44 0D 41 43     "._HID.AC"
+0000005A:  49 44 30 30 30 31 00 ...    "ID0001."
+
+      10:              Method (_STA, 0, NotSerialized)  // _STA: Status
+
+00000061:  14 19 5F 53 54 41 00 ...    ".._STA."
+
+      11:              {
+      12:                  If (_OSI ("Darwin"))
+
+00000068:  A0 10 ..................    ".."
+0000006A:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+00000072:  77 69 6E 00 ............    "win."
+
+      13:                  {
+      14:                      Return (0x0F)
+
+00000076:  A4 0A 0F ...............    "..."
+
+      15:                  }
+      17:                  Return (Zero)
+
+00000079:  A4 00 ..................    ".."
+      18:              }
+      19:          }
+      20:      }
+      21:  }
+
+
+
+Summary of errors and warnings
+
+
+ASL+ Optimizing Compiler/Disassembler version 20240927 [Sep 27 2024]
+
+ASL Input:     SSDT-EC.asl -     481 bytes      7 keywords      0 source lines
+AML Output:    SSDT-EC.aml -     123 bytes      3 opcodes       4 named objects
+Listing File:  SSDT-EC.lst -    2154 bytes
+
+Compilation successful. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+

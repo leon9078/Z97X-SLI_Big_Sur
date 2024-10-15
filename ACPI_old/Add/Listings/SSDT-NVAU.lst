@@ -1,0 +1,111 @@
+
+Intel ACPI Component Architecture
+ASL+ Optimizing Compiler/Disassembler version 20240927 (64-bit version)
+Copyright (c) 2000 - 2023 Intel Corporation
+
+Compilation of "SSDT-NVAU.asl"
+       1:  DefinitionBlock ("SSDT-NVAU.aml", "SSDT", 2, "HACK", "NVAU", 0x00000000)
+
+00000000:  53 53 44 54 9B 00 00 00     "SSDT...."
+00000008:  02 6B 48 41 43 4B 00 00     ".kHACK.."
+00000010:  4E 56 41 55 00 00 00 00     "NVAU...."
+00000018:  00 00 00 00 49 4E 54 4C     "....INTL"
+00000020:  27 09 24 20 ............    "'.$ "
+00000024:  A0 14 00 ...............    "..."
+00000027:  15 5C 2F 03 5F 53 42 5F     ".\/._SB_"
+0000002F:  50 43 49 30 50 45 47 30     "PCI0PEG0"
+00000037:  06 00 ..................    ".."
+
+       2:  {
+       3:      External (_SB_.PCI0.PEG0, DeviceObj)
+       5:      Scope (\_SB.PCI0.PEG0)
+
+00000039:  10 41 06 5C 2F 03 5F 53     ".A.\/._S"
+00000041:  42 5F 50 43 49 30 50 45     "B_PCI0PE"
+00000049:  47 30 ..................    "G0"
+
+       6:      {
+       7:          Device (NVAU)
+
+0000004B:  5B 82 4E 04 4E 56 41 55     "[.N.NVAU"
+
+       8:          {
+       9:              Name (_ADR, One)  // _ADR: Address
+
+00000053:  08 5F 41 44 52 01 ......    "._ADR."
+
+      10:              Method (_STA, 0, NotSerialized)  // _STA: Status
+
+00000059:  14 19 5F 53 54 41 00 ...    ".._STA."
+
+      11:              {
+      12:                  If (_OSI ("Darwin"))
+
+00000060:  A0 10 ..................    ".."
+00000062:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+0000006A:  77 69 6E 00 ............    "win."
+
+      13:                  {
+      14:                      Return (0x0F)
+
+0000006E:  A4 0A 0F ...............    "..."
+
+      15:                  }
+      17:                  Return (Zero)
+
+00000071:  A4 00 ..................    ".."
+
+      18:              }
+      20:              Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
+
+00000073:  14 27 5F 44 53 4D 04 ...    ".'_DSM."
+
+      21:              {
+      22:                  If (!Arg2)
+
+0000007A:  A0 08 ..................    ".."
+0000007C:  92 6A ..................    ".j"
+
+      23:                  {
+      24:                      Return (Buffer (One)
+
+0000007E:  A4 .....................    "."
+0000007F:  11 03 01 03 ............    "...."
+
+      25:                      {
+      26:                           0x03                                             // .
+      27:                      })
+      28:                  }
+      30:                  Return (Package (0x02)
+
+00000083:  A4 .....................    "."
+00000084:  12 16 02 0D 63 6C 61 73     "....clas"
+0000008C:  73 2D 63 6F 64 65 00 ...    "s-code."
+
+      31:                  {
+      32:                      "class-code", 
+      33:                      Buffer (0x04)
+
+00000093:  11 07 0A 04 FF FF FF FF     "........"
+      34:                      {
+      35:                           0xFF, 0xFF, 0xFF, 0xFF                           // ....
+      36:                      }
+      37:                  })
+      38:              }
+      39:          }
+      40:      }
+      41:  }
+
+
+
+Summary of errors and warnings
+
+
+ASL+ Optimizing Compiler/Disassembler version 20240927 [Sep 27 2024]
+
+ASL Input:     SSDT-NVAU.asl -    1080 bytes     12 keywords      0 source lines
+AML Output:    SSDT-NVAU.aml -     155 bytes      7 opcodes       5 named objects
+Listing File:  SSDT-NVAU.lst -    3333 bytes
+
+Compilation successful. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+

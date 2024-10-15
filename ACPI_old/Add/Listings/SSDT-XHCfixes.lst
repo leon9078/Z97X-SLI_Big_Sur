@@ -1,0 +1,126 @@
+
+Intel ACPI Component Architecture
+ASL+ Optimizing Compiler/Disassembler version 20240927 (64-bit version)
+Copyright (c) 2000 - 2023 Intel Corporation
+
+Compilation of "SSDT-XHCfixes.asl"
+       1:  DefinitionBlock ("SSDT-XHCfixes.aml", "SSDT", 2, "HACK", "XHCfixes", 0x00000000)
+
+00000000:  53 53 44 54 E2 00 00 00     "SSDT...."
+00000008:  02 97 48 41 43 4B 00 00     "..HACK.."
+00000010:  58 48 43 66 69 78 65 73     "XHCfixes"
+00000018:  00 00 00 00 49 4E 54 4C     "....INTL"
+00000020:  27 09 24 20 ............    "'.$ "
+00000024:  A0 47 05 00 ............    ".G.."
+00000028:  15 5C 2F 03 5F 53 42 5F     ".\/._SB_"
+00000030:  50 43 49 30 58 48 43 5F     "PCI0XHC_"
+00000038:  06 00 ..................    ".."
+0000003A:  15 .....................    "."
+0000003B:  5C 2F 04 5F 53 42 5F 50     "\/._SB_P"
+00000043:  43 49 30 58 48 43 5F 45     "CI0XHC_E"
+0000004B:  53 45 5A 08 00 .........    "SEZ.."
+00000050:  15 .....................    "."
+00000051:  5C 2F 04 5F 53 42 5F 50     "\/._SB_P"
+00000059:  43 49 30 58 48 43 5F 58     "CI0XHC_X"
+00000061:  53 45 5A 08 00 .........    "SEZ.."
+00000066:  15 .....................    "."
+00000067:  5C 2F 04 5F 53 42 5F 50     "\/._SB_P"
+0000006F:  43 49 30 58 48 43 5F 58     "CI0XHC_X"
+00000077:  57 41 5A 08 00 .........    "WAZ.."
+
+       2:  {
+       3:      External (_SB_.PCI0.XHC_, DeviceObj)
+       4:      External (_SB_.PCI0.XHC_.ESEZ, MethodObj)    // 0 Arguments
+       5:      External (_SB_.PCI0.XHC_.XSEZ, MethodObj)    // 0 Arguments
+       6:      External (_SB_.PCI0.XHC_.XWAZ, MethodObj)    // 0 Arguments
+       8:      Scope (\_SB.PCI0.XHC)
+
+0000007C:  10 45 06 5C 2F 03 5F 53     ".E.\/._S"
+00000084:  42 5F 50 43 49 30 58 48     "B_PCI0XH"
+0000008C:  43 5F ..................    "C_"
+
+       9:      {
+      10:          Method (XSEL, 0, NotSerialized)
+
+0000008E:  14 1B 58 53 45 4C 00 ...    "..XSEL."
+
+      11:          {
+      12:              If (_OSI ("Darwin"))
+
+00000095:  A0 0F ..................    ".."
+00000097:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+0000009F:  77 69 6E 00 ............    "win."
+
+      13:              {
+      14:                  Return (Zero)
+
+000000A3:  A4 00 ..................    ".."
+
+      15:              }
+      17:              Return (XSEZ ())
+
+000000A5:  A4 .....................    "."
+000000A6:  58 53 45 5A ............    "XSEZ"
+
+      18:          }
+      20:          Method (ESEL, 0, NotSerialized)
+
+000000AA:  14 1B 45 53 45 4C 00 ...    "..ESEL."
+
+      21:          {
+      22:              If (_OSI ("Darwin"))
+
+000000B1:  A0 0F ..................    ".."
+000000B3:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+000000BB:  77 69 6E 00 ............    "win."
+
+      23:              {
+      24:                  Return (Zero)
+
+000000BF:  A4 00 ..................    ".."
+
+      25:              }
+      27:              Return (ESEZ ())
+
+000000C1:  A4 .....................    "."
+000000C2:  45 53 45 5A ............    "ESEZ"
+
+      28:          }
+      30:          Method (XWAK, 0, NotSerialized)
+
+000000C6:  14 1B 58 57 41 4B 00 ...    "..XWAK."
+
+      31:          {
+      32:              If (_OSI ("Darwin"))
+
+000000CD:  A0 0F ..................    ".."
+000000CF:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+000000D7:  77 69 6E 00 ............    "win."
+
+      33:              {
+      34:                  Return (Zero)
+
+000000DB:  A4 00 ..................    ".."
+
+      35:              }
+      37:              Return (XWAZ ())
+
+000000DD:  A4 .....................    "."
+000000DE:  58 57 41 5A ............    "XWAZ"
+      38:          }
+      39:      }
+      40:  }
+
+
+
+Summary of errors and warnings
+
+
+ASL+ Optimizing Compiler/Disassembler version 20240927 [Sep 27 2024]
+
+ASL Input:     SSDT-XHCfixes.asl -     902 bytes     13 keywords      0 source lines
+AML Output:    SSDT-XHCfixes.aml -     226 bytes      9 opcodes       4 named objects
+Listing File:  SSDT-XHCfixes.lst -    3877 bytes
+
+Compilation successful. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+

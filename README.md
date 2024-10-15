@@ -47,6 +47,7 @@ Insert Arch Linux USB installer, boot from it F12 key
 
 Replace "LauncherOption" value from "Disabled" to "Full"
 Replace "ScanPolicy" value  from "0" to "65795"
+Disable Misc>Tools[0] (OpenShell)
 
 Save (Ctrl+O), then exit (Ctrl+X)
 - systemctl reboot
@@ -77,6 +78,64 @@ What we need to do is manually change the order of those entries to have OpenCor
 - efibootmgr -Bb 0004
 - efibootmgr -Bb 0003
 - efibootmgr -o 0001,0002
+- efibootmgr -t 0
 - systemctl reboot
 
 Unplug Arch Linux USB installer drive, done. Enojy your new hackintosh
+
+
+
+# Although acidanthera team suggest not to replace DSDT, I have decided to replace it because of errors in OEM DSDT... I extracted the OEM ACPI using the latest BIOS version, latest BIOS settings etc.
+
+I'm using latest iASL binary (2024-09-27) compiled by [mackonsti](https://github.com/mackonsti) for macOS. You can download it [here](https://github.com/mackonsti/iASL).
+
+So, before I was using:
+
+ACPI>Add
+- SSDT-GPRW
+- SSDT-XHCfixes
+
+ACPI>Patch
+- EHC1 to EH01             Count 0
+- EHC2 to EH02             Count 0
+- XHC_ Method _PRW to XPRW
+- XHC_ Method XSEL to XSEZ
+- XHC_ Method ESEL to ESEZ
+- XHC_ Method XWAK to XWAZ
+- Method GPRW to XPRW
+
+
+
+Now, I'm using:
+
+ACPI>Add
+- DSDT
+
+ACPI>Delete
+
+- All | bool| NO
+- Comment | string | "Delete OEM SSDT SaSsdt"
+- Enabled | bool | YES
+- OemTableId | data | <53 61 53 73 64 74 20 00>
+- TableLength | integer | 23390
+- TableSignature | data | <53 53 44 54> [SSDT]
+
+Inside ACPI>Delete section, DSDT must NOT appear.
+
+ACPI>Patch [none]
+
+The ACPI patches are applied directly inside DSDT:
+- Replace every instance of "EHC" to "EH0" (case-sensitive)
+- Add Darwin conditions inside XHC_ Method _PRW
+- Add Darwin conditions inside XHC_ Method XSEL
+- Add Darwin conditions inside XHC_ Method ESEL
+- Add Darwin conditions inside XHC_ Method XWAK
+- Add Darwin conditions inside Method GPRW
+
+
+
+Also, SSDTs that I'm no longer using are:
+
+- SSDT-NVAU. This creates a fake "class-code" 0xFFFFFFFF to the NVIDIA HDMI Audio device, in order to completely disable dGPU audio in macOS.
+- SSDT-RMB3. Disable Intel HDMI audio, when running without dGPU.
+- SSDT-UMethods. With this SSDT, we avoid "Unknown methods" in DSDT/SSDT-SaSsdt, by including it for external symbol resolution.

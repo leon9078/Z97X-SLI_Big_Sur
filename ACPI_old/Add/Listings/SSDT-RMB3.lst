@@ -1,0 +1,127 @@
+
+Intel ACPI Component Architecture
+ASL+ Optimizing Compiler/Disassembler version 20240927 (64-bit version)
+Copyright (c) 2000 - 2023 Intel Corporation
+
+Compilation of "SSDT-RMB3.asl"
+       1:  DefinitionBlock ("SSDT-RMB3.aml", "SSDT", 2, "LEON", "RMB3", 0x00000000)
+
+00000000:  53 53 44 54 E4 00 00 00     "SSDT...."
+00000008:  02 8C 4C 45 4F 4E 00 00     "..LEON.."
+00000010:  52 4D 42 33 00 00 00 00     "RMB3...."
+00000018:  00 00 00 00 49 4E 54 4C     "....INTL"
+00000020:  27 09 24 20 ............    "'.$ "
+00000024:  A0 21 00 ...............    ".!."
+00000027:  15 5C 2E 5F 53 42 5F 50     ".\._SB_P"
+0000002F:  43 49 30 06 00 .........    "CI0.."
+00000034:  15 5C 2F 03 5F 53 42 5F     ".\/._SB_"
+0000003C:  50 43 49 30 42 30 44 33     "PCI0B0D3"
+00000044:  06 00 ..................    ".."
+
+       2:  {
+       3:      External (_SB_.PCI0, DeviceObj)
+       4:      External (_SB_.PCI0.B0D3, DeviceObj)
+       6:      Scope (\_SB.PCI0.B0D3)
+
+00000046:  10 28 5C 2F 03 5F 53 42     ".(\/._SB"
+0000004E:  5F 50 43 49 30 42 30 44     "_PCI0B0D"
+00000056:  33 .....................    "3"
+
+       7:      {
+       8:          OperationRegion (ZPCZ, PCI_Config, 0x54, 0x04)
+
+00000057:  5B 80 5A 50 43 5A 02 0A     "[.ZPCZ.."
+0000005F:  54 0A 04 ...............    "T.."
+
+       9:          Field (ZPCZ, DWordAcc, Lock, Preserve)
+      10:          {
+      11:              D3HT,   2
+      12:          }
+
+00000062:  5B 81 0B 5A 50 43 5A 13     "[..ZPCZ."
+0000006A:  44 33 48 54 02 .........    "D3HT."
+
+      13:      }
+      15:      Scope (\_SB.PCI0)
+
+0000006F:  10 44 07 5C 2E 5F 53 42     ".D.\._SB"
+00000077:  5F 50 43 49 30 .........    "_PCI0"
+
+      16:      {
+      17:          OperationRegion (ZBUS, PCI_Config, 0x54, 0x04)
+
+0000007C:  5B 80 5A 42 55 53 02 0A     "[.ZBUS.."
+00000084:  54 0A 04 ...............    "T.."
+
+      18:          Field (ZBUS, DWordAcc, NoLock, Preserve)
+      19:          {
+      20:                  ,   5, 
+      21:              D3EN,   1
+      22:          }
+
+00000087:  5B 81 0D 5A 42 55 53 03     "[..ZBUS."
+0000008F:  00 05 44 33 45 4E 01 ...    "..D3EN."
+
+      24:          Device (RMB3)
+
+00000096:  5B 82 4C 04 52 4D 42 33     "[.L.RMB3"
+
+      25:          {
+      26:              Name (_HID, "RMB30001")  // _HID: Hardware ID
+
+0000009E:  08 5F 48 49 44 0D 52 4D     "._HID.RM"
+000000A6:  42 33 30 30 30 31 00 ...    "B30001."
+
+      27:              Method (_STA, 0, NotSerialized)  // _STA: Status
+
+000000AD:  14 19 5F 53 54 41 00 ...    ".._STA."
+
+      28:              {
+      29:                  If (_OSI ("Darwin"))
+
+000000B4:  A0 10 ..................    ".."
+000000B6:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+000000BE:  77 69 6E 00 ............    "win."
+
+      30:                  {
+      31:                      Return (0x0F)
+
+000000C2:  A4 0A 0F ...............    "..."
+
+      32:                  }
+      34:                  Return (Zero)
+
+000000C5:  A4 00 ..................    ".."
+
+      35:              }
+      37:              Method (_INI, 0, NotSerialized)  // _INI: Initialize
+
+000000C7:  14 1C 5F 49 4E 49 00 ...    ".._INI."
+
+      38:              {
+      39:                  ^^B0D3.D3HT = 0x03
+
+000000CE:  70 0A 03 5E 5E 2E 42 30     "p..^^.B0"
+000000D6:  44 33 44 33 48 54 ......    "D3D3HT"
+
+      40:                  ^^D3EN = Zero
+
+000000DC:  70 00 5E 5E 44 33 45 4E     "p.^^D3EN"
+      41:              }
+      42:          }
+      43:      }
+      44:  }
+
+
+
+Summary of errors and warnings
+
+
+ASL+ Optimizing Compiler/Disassembler version 20240927 [Sep 27 2024]
+
+ASL Input:     SSDT-RMB3.asl -    1030 bytes     15 keywords      0 source lines
+AML Output:    SSDT-RMB3.aml -     228 bytes      5 opcodes      10 named objects
+Listing File:  SSDT-RMB3.lst -    3719 bytes
+
+Compilation successful. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+

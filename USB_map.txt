@@ -1,0 +1,20 @@
+
+
+HS03 USB3     5 Gbps
+HS04 USB3     5 Gbps
+HS05 USB2   480 Mbps
+HS06 USB2   480 Mbps
+HS07 USB2   480 Mbps
+HS08 USB2   480 Mbps
+HS09 USB3     5 Gbps
+HS10 USB3     5 Gbps
+HS11 Bluetooth  0xFF
+
+HS13 USB2   480 Mbps
+HS14 USB2   480 Mbps
+
+
+SSP3 USB3     5 Gbps
+SSP4 USB3     5 Gbps
+SSP5 USB3     5 Gbps
+SSP6 USB3     5 Gbps

@@ -1,0 +1,72 @@
+
+Intel ACPI Component Architecture
+ASL+ Optimizing Compiler/Disassembler version 20240927 (64-bit version)
+Copyright (c) 2000 - 2023 Intel Corporation
+
+Compilation of "SSDT-MCHC.asl"
+       1:  DefinitionBlock ("SSDT-MCHC.aml", "SSDT", 2, "HACK", "MCHC", 0x00000000)
+
+00000000:  53 53 44 54 67 00 00 00     "SSDTg..."
+00000008:  02 02 48 41 43 4B 00 00     "..HACK.."
+00000010:  4D 43 48 43 00 00 00 00     "MCHC...."
+00000018:  00 00 00 00 49 4E 54 4C     "....INTL"
+00000020:  27 09 24 20 ............    "'.$ "
+00000024:  A0 0F 00 ...............    "..."
+00000027:  15 5C 2E 5F 53 42 5F 50     ".\._SB_P"
+0000002F:  43 49 30 06 00 .........    "CI0.."
+
+       2:  {
+       3:      External (_SB_.PCI0, DeviceObj)
+       5:      Scope (\_SB.PCI0)
+
+00000034:  10 32 5C 2E 5F 53 42 5F     ".2\._SB_"
+0000003C:  50 43 49 30 ............    "PCI0"
+
+       6:      {
+       7:          Device (MCHC)
+
+00000040:  5B 82 25 4D 43 48 43 ...    "[.%MCHC"
+
+       8:          {
+       9:              Name (_ADR, Zero)  // _ADR: Address
+
+00000047:  08 5F 41 44 52 00 ......    "._ADR."
+
+      10:              Method (_STA, 0, NotSerialized)  // _STA: Status
+
+0000004D:  14 19 5F 53 54 41 00 ...    ".._STA."
+
+      11:              {
+      12:                  If (_OSI ("Darwin"))
+
+00000054:  A0 10 ..................    ".."
+00000056:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+0000005E:  77 69 6E 00 ............    "win."
+
+      13:                  {
+      14:                      Return (0x0F)
+
+00000062:  A4 0A 0F ...............    "..."
+
+      15:                  }
+      17:                  Return (Zero)
+
+00000065:  A4 00 ..................    ".."
+      18:              }
+      19:          }
+      20:      }
+      21:  }
+
+
+
+Summary of errors and warnings
+
+
+ASL+ Optimizing Compiler/Disassembler version 20240927 [Sep 27 2024]
+
+ASL Input:     SSDT-MCHC.asl -     465 bytes      7 keywords      0 source lines
+AML Output:    SSDT-MCHC.aml -     103 bytes      3 opcodes       4 named objects
+Listing File:  SSDT-MCHC.lst -    1998 bytes
+
+Compilation successful. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+
