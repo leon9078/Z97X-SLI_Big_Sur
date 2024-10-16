@@ -10,8 +10,8 @@ Found VHD device 'Msft Virtual Disk SCSI Disk Device'
 No logical drive found (unpartitioned?)
 1 device found
 No volume information for drive 0x81
-Disk type: FIXED, Disk size: 38 MB, Sector size: 512 bytes
-Cylinders: 4, Tracks per cylinder: 255, Sectors per track: 63
+Disk type: FIXED, Disk size: 11 MB, Sector size: 512 bytes
+Cylinders: 1, Tracks per cylinder: 255, Sectors per track: 63
 Partition type: MBR, NB Partitions: 0
 Disk ID: 0x00000000
 Drive does not have a Boot Marker
@@ -30,27 +30,23 @@ Clearing MBR/PBR/GPT structures...
 Erasing 128 sectors
 Initializing disk...
 Partitioning (MBR)...
-Creating Main Data Partition (offset: 1048576, size: 36 MB)
+● Creating Main Data Partition (offset: 1048576, size: 10 MB)
 Waiting for logical drive to reappear...
-Formatting to FAT32 (using IFS)
+Formatting to FAT (using IFS)
 Using cluster size: 512 bytes
-Slow format was selected
+Quick format was selected
 Creating file system...
 Format completed.
 Writing Master Boot Record...
+Warning: converting a non FAT16 partition to FAT16 LBA: FS type=0x01
 Set bootable USB partition as 0x80
 Using Windows 7 MBR
-Found volume \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673}\
-Notice: Volume Device Path is \Device\HarddiskVolume3
-Waiting for access on \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673}...
-Opened \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673} for exclusive write access
+Found volume \\?\Volume{ae551c5f-8bf0-11ef-962c-08002704c1ce}\
+Opened \\?\Volume{ae551c5f-8bf0-11ef-962c-08002704c1ce} for exclusive write access
 Writing Partition Boot Record...
-Using Standard FAT32 partition boot record
-Confirmed new volume has a primary FAT32 boot sector
-Setting primary FAT32 boot sector for boot...
-Confirmed new volume has a secondary FAT32 boot sector
-Setting secondary FAT32 boot sector for boot...
-Successfully remounted \\?\Volume{b5f593e1-1572-11ef-a4f1-8a140246c673}\ as D:
+Using Standard FAT16 partition boot record
+Confirmed new volume has a FAT16 boot sector
+Successfully remounted \\?\Volume{ae551c5f-8bf0-11ef-962c-08002704c1ce}\ as D:
 Copying DOS files...
 Patching COMMAND.COM...
 Successfully wrote 'D:\COMMAND.COM' (93040 bytes)
@@ -75,13 +71,13 @@ Finalizing, please wait...
 
 Found VHD device 'Msft Virtual Disk SCSI Disk Device'
 1 device found
-Disk type: FIXED, Disk size: 38 MB, Sector size: 512 bytes
-Cylinders: 4, Tracks per cylinder: 255, Sectors per track: 63
+Disk type: FIXED, Disk size: 11 MB, Sector size: 512 bytes
+Cylinders: 1, Tracks per cylinder: 255, Sectors per track: 63
 Partition type: MBR, NB Partitions: 1
-Disk ID: 0x000415A7
+Disk ID: 0x00036F36
 Drive has a Windows 7 Master Boot Record
 Partition 1:
-  Type: FAT32 LBA (0x0c)
-  Detected File System: FAT32
-  Size: 36 MB (37748736 bytes)
+  Type: FAT16 LBA (0x0e)
+  Detected File System: FAT16
+  Size: 10 MB (10485760 bytes)
   Start Sector: 2048, Boot: Yes
