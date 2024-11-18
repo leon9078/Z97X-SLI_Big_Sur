@@ -1,116 +1,117 @@
 
 Intel ACPI Component Architecture
-ASL+ Optimizing Compiler/Disassembler version 20240927 (64-bit version)
-Copyright (c) 2000 - 2023 Intel Corporation
+ASL Optimizing Compiler version 20120711-32 [Jul 11 2012]
+Copyright (c) 2000 - 2012 Intel Corporation
 
-Compilation of "SSDT-BUS0BLC0.asl"
-       1:  DefinitionBlock ("SSDT-BUS0BLC0.aml", "SSDT", 2, "HACK", "BUS0BLC0", 0x00000000)
+Compilation of "SSDT-BUS0BLC0.dsl" - Mon Nov 18 09:01:46 2024
 
-00000000:  53 53 44 54 B6 00 00 00     "SSDT...."
-00000008:  02 16 48 41 43 4B 00 00     "..HACK.."
-00000010:  42 55 53 30 42 4C 43 30     "BUS0BLC0"
-00000018:  00 00 00 00 49 4E 54 4C     "....INTL"
-00000020:  27 09 24 20 ............    "'.$ "
-00000024:  A0 14 00 ...............    "..."
-00000027:  15 5C 2F 03 5F 53 42 5F     ".\/._SB_"
-0000002F:  50 43 49 30 53 42 55 53     "PCI0SBUS"
-00000037:  06 00 ..................    ".."
+       1....DefinitionBlock ("", "SSDT", 2, "HACK", "BUS0BLC0", 0x00000000)
 
-       2:  {
-       3:      External (_SB_.PCI0.SBUS, DeviceObj)
-       5:      Scope (\_SB.PCI0.SBUS)
+00000000....53 53 44 54 A1 00 00 00     "SSDT...."
+00000008....02 4E 48 41 43 4B 00 00     ".NHACK.."
+00000010....42 55 53 30 42 4C 43 30     "BUS0BLC0"
+00000018....00 00 00 00 49 4E 54 4C     "....INTL"
+00000020....11 07 12 20 ............    "... "
 
-00000039:  10 4C 07 5C 2F 03 5F 53     ".L.\/._S"
-00000041:  42 5F 50 43 49 30 53 42     "B_PCI0SB"
-00000049:  55 53 ..................    "US"
+       2....{
+       3....    External (\_SB_.PCI0.SBUS, DeviceObj)
+       4....
+       5....    Scope (\_SB.PCI0.SBUS)
 
-       6:      {
-       7:          Device (BUS0)
+00000024....10 4C 07 5C 2F 03 5F 53     ".L.\/._S"
+0000002C....42 5F 50 43 49 30 53 42     "B_PCI0SB"
+00000034....55 53 ..................    "US"
 
-0000004B:  5B 82 49 06 42 55 53 30     "[.I.BUS0"
+       6....    {
+       7....        Device (BUS0)
 
-       8:          {
-       9:              Name (_ADR, Zero)  // _ADR: Address
+00000036....5B 82 49 06 42 55 53 30     "[.I.BUS0"
 
-00000053:  08 5F 41 44 52 00 ......    "._ADR."
+       8....        {
+       9....            Name (_ADR, Zero)  
 
-      10:              Name (_CID, "smbus")  // _CID: Compatible ID
+0000003E....08 5F 41 44 52 00 ......    "._ADR."
 
-00000059:  08 5F 43 49 44 0D 73 6D     "._CID.sm"
-00000061:  62 75 73 00 ............    "bus."
+      10....            Name (_CID, "smbus")  
 
-      11:              Method (_STA, 0, NotSerialized)  // _STA: Status
+00000044....08 5F 43 49 44 0D 73 6D     "._CID.sm"
+0000004C....62 75 73 00 ............    "bus."
 
-00000065:  14 19 5F 53 54 41 00 ...    ".._STA."
+      11....            Method (_STA, 0, NotSerialized)  
 
-      12:              {
-      13:                  If (_OSI ("Darwin"))
+00000050....14 19 5F 53 54 41 00 ...    ".._STA."
 
-0000006C:  A0 10 ..................    ".."
-0000006E:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
-00000076:  77 69 6E 00 ............    "win."
+      12....            {
+      13....                If (_OSI ("Darwin"))
 
-      14:                  {
-      15:                      Return (0x0F)
+00000057....A0 10 ..................    ".."
+00000059....5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+00000061....77 69 6E 00 ............    "win."
 
-0000007A:  A4 0A 0F ...............    "..."
+      14....                {
+      15....                    Return (0x0F)
 
-      16:                  }
-      18:                  Return (Zero)
+00000065....A4 0A 0F ...............    "..."
 
-0000007D:  A4 00 ..................    ".."
+      16....                }
+      17....
+      18....                Return (Zero)
 
-      19:              }
-      21:              Device (BLC0)
+00000068....A4 00 ..................    ".."
 
-0000007F:  5B 82 35 42 4C 43 30 ...    "[.5BLC0"
+      19....            }
+      20....
+      21....            Device (BLC0)
 
-      22:              {
-      23:                  Name (_ADR, Zero)  // _ADR: Address
+0000006A....5B 82 35 42 4C 43 30 ...    "[.5BLC0"
 
-00000086:  08 5F 41 44 52 00 ......    "._ADR."
+      22....            {
+      23....                Name (_ADR, Zero)  
 
-      24:                  Name (_CID, "smbus-blc")  // _CID: Compatible ID
+00000071....08 5F 41 44 52 00 ......    "._ADR."
 
-0000008C:  08 5F 43 49 44 0D 73 6D     "._CID.sm"
-00000094:  62 75 73 2D 62 6C 63 00     "bus-blc."
+      24....                Name (_CID, "smbus-blc")  
 
-      25:                  Method (_STA, 0, NotSerialized)  // _STA: Status
+00000077....08 5F 43 49 44 0D 73 6D     "._CID.sm"
+0000007F....62 75 73 2D 62 6C 63 00     "bus-blc."
 
-0000009C:  14 19 5F 53 54 41 00 ...    ".._STA."
+      25....                Method (_STA, 0, NotSerialized)  
 
-      26:                  {
-      27:                      If (_OSI ("Darwin"))
+00000087....14 19 5F 53 54 41 00 ...    ".._STA."
 
-000000A3:  A0 10 ..................    ".."
-000000A5:  5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
-000000AD:  77 69 6E 00 ............    "win."
+      26....                {
+      27....                    If (_OSI ("Darwin"))
 
-      28:                      {
-      29:                          Return (0x0F)
+0000008E....A0 10 ..................    ".."
+00000090....5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+00000098....77 69 6E 00 ............    "win."
 
-000000B1:  A4 0A 0F ...............    "..."
+      28....                    {
+      29....                        Return (0x0F)
 
-      30:                      }
-      32:                      Return (Zero)
+0000009C....A4 0A 0F ...............    "..."
 
-000000B4:  A4 00 ..................    ".."
-      33:                  }
-      34:              }
-      35:          }
-      36:      }
-      37:  }
+      30....                    }
+      31....
+      32....                    Return (Zero)
 
+0000009F....A4 00 ..................    ".."
+      33....                }
+      34....            }
+      35....        }
+      36....    }
+      37....}
+      38....
 
 
 Summary of errors and warnings
 
 
-ASL+ Optimizing Compiler/Disassembler version 20240927 [Sep 27 2024]
+ASL Optimizing Compiler version 20120711-32 [Jul 11 2012]
 
-ASL Input:     SSDT-BUS0BLC0.asl -     971 bytes     15 keywords      0 source lines
-AML Output:    SSDT-BUS0BLC0.aml -     182 bytes      6 opcodes       9 named objects
-Listing File:  SSDT-BUS0BLC0.lst -    3351 bytes
+ASL Input:     SSDT-BUS0BLC0.dsl - 39 lines, 845 bytes, 15 keywords
+AML Output:    SSDT-BUS0BLC0.aml - 161 bytes, 9 named objects, 6 executable opcodes
+Listing File:  SSDT-BUS0BLC0.lst - 3262 bytes
 
-Compilation successful. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+Compilation complete. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
 

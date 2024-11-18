@@ -8,22 +8,6 @@
 		<array>
 			<dict>
 				<key>Comment</key>
-				<string>Fix OEM DSDT errors</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>DSDT.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Fix unknown methods in OEM SSDT</string>
-				<key>Enabled</key>
-				<true/>
-				<key>Path</key>
-				<string>SSDT-OEM.aml</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
 				<string>Fix AppleSMBusControllerICH not attaching</string>
 				<key>Enabled</key>
 				<true/>
@@ -56,6 +40,22 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>Remove wake capability from selected PCI devices that share the same GPE (0x0D)</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-PRW.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>XHCI routing fixes</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-XHCfixes.aml</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>XHCI USB Map alternative</string>
 				<key>Enabled</key>
 				<true/>
@@ -64,24 +64,220 @@
 			</dict>
 		</array>
 		<key>Delete</key>
+		<array/>
+		<key>Patch</key>
 		<array>
 			<dict>
-				<key>All</key>
-				<false/>
+				<key>Base</key>
+				<string>\_SB.PCI0.GLAN._PRW</string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
 				<key>Comment</key>
-				<string>Delete OEM SSDT SaSsdt</string>
+				<string>GLAN Method _PRW to XPRW</string>
+				<key>Count</key>
+				<integer>1</integer>
 				<key>Enabled</key>
 				<true/>
+				<key>Find</key>
+				<data>X1BSVw==</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
 				<key>OemTableId</key>
-				<data>U2FTc2R0IAA=</data>
+				<data>QSBNIEkAAAA=</data>
+				<key>Replace</key>
+				<data>WFBSVw==</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
 				<key>TableLength</key>
-				<integer>23390</integer>
+				<integer>67704</integer>
 				<key>TableSignature</key>
-				<data>U1NEVA==</data>
+				<data>RFNEVA==</data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string>\_SB.PCI0.EHO1._PRW</string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
+				<string>EHO1 Method _PRW to XPRW</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>X1BSVw==</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data>QSBNIEkAAAA=</data>
+				<key>Replace</key>
+				<data>WFBSVw==</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
+				<key>TableLength</key>
+				<integer>67704</integer>
+				<key>TableSignature</key>
+				<data>RFNEVA==</data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string>\_SB.PCI0.EHO2._PRW</string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
+				<string>EHO2 Method _PRW to XPRW</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>X1BSVw==</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data>QSBNIEkAAAA=</data>
+				<key>Replace</key>
+				<data>WFBSVw==</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
+				<key>TableLength</key>
+				<integer>67704</integer>
+				<key>TableSignature</key>
+				<data>RFNEVA==</data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string>\_SB.PCI0.HDEF._PRW</string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
+				<string>HDEF Method _PRW to XPRW</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>X1BSVw==</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data>QSBNIEkAAAA=</data>
+				<key>Replace</key>
+				<data>WFBSVw==</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
+				<key>TableLength</key>
+				<integer>67704</integer>
+				<key>TableSignature</key>
+				<data>RFNEVA==</data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string>\_SB.PCI0.XHC_.XSEL</string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
+				<string>XHC Method XSEL to XSEX</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>WFNFTA==</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data>QSBNIEkAAAA=</data>
+				<key>Replace</key>
+				<data>WFNFWA==</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
+				<key>TableLength</key>
+				<integer>67704</integer>
+				<key>TableSignature</key>
+				<data>RFNEVA==</data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string>\_SB.PCI0.XHC_.ESEL</string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
+				<string>XHC Method ESEL to ESEX</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>RVNFTA==</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data>QSBNIEkAAAA=</data>
+				<key>Replace</key>
+				<data>RVNFWA==</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
+				<key>TableLength</key>
+				<integer>67704</integer>
+				<key>TableSignature</key>
+				<data>RFNEVA==</data>
+			</dict>
+			<dict>
+				<key>Base</key>
+				<string>\_SB.PCI0.XHC_.XWAK</string>
+				<key>BaseSkip</key>
+				<integer>0</integer>
+				<key>Comment</key>
+				<string>XHC Method XWAK to XWAX</string>
+				<key>Count</key>
+				<integer>1</integer>
+				<key>Enabled</key>
+				<true/>
+				<key>Find</key>
+				<data>WFdBSw==</data>
+				<key>Limit</key>
+				<integer>0</integer>
+				<key>Mask</key>
+				<data></data>
+				<key>OemTableId</key>
+				<data>QSBNIEkAAAA=</data>
+				<key>Replace</key>
+				<data>WFdBWA==</data>
+				<key>ReplaceMask</key>
+				<data></data>
+				<key>Skip</key>
+				<integer>0</integer>
+				<key>TableLength</key>
+				<integer>67704</integer>
+				<key>TableSignature</key>
+				<data>RFNEVA==</data>
 			</dict>
 		</array>
-		<key>Patch</key>
-		<array/>
 		<key>Quirks</key>
 		<dict>
 			<key>FadtEnableReset</key>
@@ -89,7 +285,7 @@
 			<key>NormalizeHeaders</key>
 			<false/>
 			<key>RebaseRegions</key>
-			<true/>
+			<false/>
 			<key>ResetHwSig</key>
 			<true/>
 			<key>ResetLogoStatus</key>
@@ -846,7 +1042,7 @@
 			<integer>0</integer>
 		</dict>
 		<key>ConnectDrivers</key>
-		<true/>
+		<false/>
 		<key>Drivers</key>
 		<array>
 			<dict>
@@ -868,18 +1064,7 @@
 				<string/>
 				<key>Enabled</key>
 				<true/>
-				<key>LoadEarly</key>
-				<false/>
-				<key>Path</key>
-				<string>HfsPlus.efi</string>
-			</dict>
-			<dict>
-				<key>Arguments</key>
-				<string/>
-				<key>Comment</key>
-				<string/>
-				<key>Enabled</key>
-				<false/>
+				<!-- <false/> -->
 				<key>LoadEarly</key>
 				<false/>
 				<key>Path</key>
