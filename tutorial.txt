@@ -1,7 +1,12 @@
+When modifying 0201-00_07 (Defaults for NVRAM edit), DO NOT remove header from "Raw section", otherwise it will replace "AmiStandardDefaultsVariable" with a Variable GUID. Also it replaces "Free space" with "Padding", not good.
+
+
+MMTool 4.50.0023 has 2 problems. First one, it does not recognize modules with "MM dependency section" within it. Second, when we save the ROM, the output filename will be lowercase...
+Use MMTool 5.02.0024 Mod, it works flawlessly
+
 Skipped modules to Extract:
 - 01_00 | FV_MAIN_NESTED
 - 01_01 | Microcode [real]. Need to update to the latest revisions every CPU microcode, plus need to fix alignment.
-- 0201-00_3F | AAA99A23-13B6-4C31-BB8B-299E8EC04FA4 | SSDT SaSsdt. Directly create a Raw section with GenSec and a Freeform with GenFfs.
 - 03_02 | Microcode [real]. Need to update to the latest revisions every CPU microcode, plus need to fix alignment.
 
 List of LZMA compressed modules:
@@ -31,7 +36,7 @@ List of modules that comes immediately after a "Padding file" that need correcti
 - 03_32 | TxtPeiAp
 
 
-To modify a default BIOS setting (ACPI Debug from Disabled to Enabled), we need to edit the BIOS is 3 different places:
+To modify a default BIOS setting ("ACPI Debug" from "Disabled" to "Enabled"), we need to edit the BIOS is 3 different places:
 - Setup module     | 01_04
 - AMITSE/setupdata | 0201-00_81
 - NVRAM            | 00_00 and 0201-00_07
@@ -39,15 +44,16 @@ To modify a default BIOS setting (ACPI Debug from Disabled to Enabled), we need 
 Modify OEM DSDT with the custom one create with OpenCore ACPI>Patch
 - AmiBoardInfo | 0201-00_0C
 
-Modify OEM SSDT "SaSsdt \0" with the custom one create with OpenCore ACPI>Patch
-- AAA99A23-13B6-4C31-BB8B-299E8EC04FA4 | 0201-00_3F
 
 
 Add "HfsPlus" driver from acidanthera OcBinaryData repository. Create the PE32, UI. Then a Compressed none section of them. Finally GenFfs DXE driver.
 
 
 
-List of modules that contains "MM dependency section", that result in body size = 0 when insert with MMTool.
+DO NOT follow below part!!!
+
+
+List of modules that contains "MM dependency section", that result in body size = 0 when insert with MMTool 4.50.0023. Use MMTool 5.02.0024 Mod.
 "Replace as-is" with UEFITool 0.28.0
 
 - 0201-00_1F | SmmChildDispatcher2 | E53734A3-E594-4C25-B1A2-081445650F7F | Size: 00005AE1
