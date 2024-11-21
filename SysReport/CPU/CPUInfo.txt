@@ -24,13 +24,13 @@ CoreCount 4
 ThreadCount 4
 ExternalClock 100
 ARTFrequency 0
-CPUFrequency 3399995310
-CPUFrequencyFromTSC 3399995310
+CPUFrequency 3400002310
+CPUFrequencyFromTSC 3400002310
 CPUFrequencyFromART 0
 TscAdjust 0
 CPUFrequencyFromApple 0
 CPUFrequencyFromVMT 0
-FSBFrequency 99999862
+FSBFrequency 100000067
 
 CPU00:
 MSR_PLATFORM_INFO: 0x80838F3012200
