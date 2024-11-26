@@ -1,21 +1,20 @@
-When modifying 0201-00_07 (Defaults for NVRAM edit), DO NOT remove header from "Raw section", otherwise it will replace "AmiStandardDefaultsVariable" with a Variable GUID. Also it replaces "Free space" with "Padding", not good.
+When modifying 0201-00_07 (Defaults), DO NOT remove header from "Raw section", otherwise it will replace "AmiStandardDefaultsVariable" with a Variable GUID. Also it replaces "Free space" with "Padding", not good.
 
-
-MMTool 4.50.0023 has 2 problems. First one, it does not recognize modules with "MM dependency section" within it. Second, when we save the ROM, the output filename will be lowercase...
-Use MMTool 5.02.0024 Mod, it works flawlessly
+MMTool 4.50.0023 has 2 problems. First one, it does not recognize modules with "MM dependency section" within it. Second, when we save the ROM, the output filename will ALWAYS be lowercase...
+Use MMTool 5.02.0024 Mod, it works flawlessly with my Aptio IV image.
 
 Skipped modules to Extract:
-- 01_00 | FV_MAIN_NESTED
+- 00_00 | NVRAM | NVAR store
+- 01_00 | FV_MAIN_NESTED | FV_MAIN_NESTED
 - 01_01 | Microcode [real]. Need to update to the latest revisions every CPU microcode, plus need to fix alignment.
 - 03_02 | Microcode [real]. Need to update to the latest revisions every CPU microcode, plus need to fix alignment.
 
 List of LZMA compressed modules:
 
 - 01_00 | FV_MAIN_NESTED [Can not be deleted / replaced, an error will popup in MMTool]
-- 01_02 [no dependency section]
-- 01_03 [no dependency section]
+- 01_02 [no need to remove dependency section first]
+- 01_03 [no need to remove dependency section first]
 - 01_04 | Setup [need edit with GenFfs / MMTool Insert compressed ...]
-
 - 03_03 | UsbBotPeim [need edit with GenFfs / MMTool Insert compressed ...]
 - 03_04 | Recovery [need edit with GenFfs / MMTool Insert compressed ...]
 - 03_08 | IT8728SioAcBack [need edit with GenFfs / MMTool Insert compressed ...]
@@ -23,20 +22,18 @@ List of LZMA compressed modules:
 - 03_19 | PchInitSmm [need edit with GenFfs / MMTool Insert compressed ...]
 - 03_1E | CryptoPei [need edit with GenFfs / MMTool Insert compressed ...]
 - 03_22 | Capsule [need edit with GenFfs / MMTool Insert compressed ...]
-- 03_2A [no dependency section]
-- 03_2B [no dependency section]
+- 03_2A [no need to remove dependency section first]
+- 03_2B [no need to remove dependency section first]
 
 List of modules that comes immediately after a "Padding file" that need correction (from Attributes: X8h to X0h):
 
-- 01_01 | CPU microcodes [real one, also need to update them with the latest one]
-- 0201-00_02 | CPU microcodes [fake one]
+- 01_01 | CPU microcodes [real one, also need to update them with the latest one] | From "Attributes: 48h" to "Attributes: 44h" (Fixed)
+- 0201-00_02 | CPU microcodes [fake one]                                          | From "Attributes: 08h" to "Attributes: 00h"
+- 03_02 | CPU microcodes [real one, also need to update them with the latest one] | From "Attributes: 48h" to "Attributes: 44h" (Fixed)
+- 03_0B | BiosAc                                                                  | From "Attributes: 28h" to "Attributes: 00h"
+- 03_32 | TxtPeiAp                                                                | From "Attributes: 28h" to "Attributes: 00h"
 
-- 03_02 | CPU microcodes [real one, also need to update them with the latest one]
-- 03_0B | BiosAc
-- 03_32 | TxtPeiAp
-
-
-To modify a default BIOS setting ("ACPI Debug" from "Disabled" to "Enabled"), we need to edit the BIOS is 3 different places:
+To modify one default BIOS setting ("ACPI Debug" from "Disabled" to "Enabled"), we need to edit the BIOS is 3 different places:
 - Setup module     | 01_04
 - AMITSE/setupdata | 0201-00_81
 - NVRAM            | 00_00 and 0201-00_07
@@ -44,23 +41,4 @@ To modify a default BIOS setting ("ACPI Debug" from "Disabled" to "Enabled"), we
 Modify OEM DSDT with the custom one create with OpenCore ACPI>Patch
 - AmiBoardInfo | 0201-00_0C
 
-
-
-Add "HfsPlus" driver from acidanthera OcBinaryData repository. Create the PE32, UI. Then a Compressed none section of them. Finally GenFfs DXE driver.
-
-
-
-DO NOT follow below part!!!
-
-
-List of modules that contains "MM dependency section", that result in body size = 0 when insert with MMTool 4.50.0023. Use MMTool 5.02.0024 Mod.
-"Replace as-is" with UEFITool 0.28.0
-
-- 0201-00_1F | SmmChildDispatcher2 | E53734A3-E594-4C25-B1A2-081445650F7F | Size: 00005AE1
-- 0201-00_20 | AcpiModeEnable      | 750890A6-7ACF-4F4F-81BD-B400C2BEA95A | Size: 000026E1
-- 0201-00_4A | S3Save              | 26A2481E-4424-46A2-9943-CC4039EAD8F8 | Size: 000032C9
-- 0201-00_6B | NvramSmi            | 842A454A-75E5-408B-8B1C-36420E4E3F21 | Size: 000020CD
-- 0201-00_6D | OemActivation3      | 76D5CF91-0C55-434E-97C2-D2825C82E610 | Size: 00001C25
-- 0201-00_80 | SmmCommunicate      | 7E2D983F-F703-4A29-9761-77B51F5354ED | Size: 00001009
-- 0201-00_A3 | USBRT               | 04EAAAA1-29A1-11D7-8838-00500473D4EB | Size: 000192E1
-- 0201-00_BF | CRBSMI              | 221F1D4F-034C-4BEA-B2BB-B7A9672B06D7 | Size: 00001121
+Add "HfsPlus" driver from acidanthera OcBinaryData repository. Create the PE32, UI. Then a Compressed none section of them. Finally GenFfs DXE driver with GUID "AE4C11C8-1D6C-F24E-A183-E1CA36D1A8A9".
