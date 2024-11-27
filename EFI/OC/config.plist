@@ -99,11 +99,11 @@
 			</dict>
 			<dict>
 				<key>Base</key>
-				<string>\_SB.PCI0.EHO1._PRW</string>
+				<string>\_SB.PCI0.EH01._PRW</string>
 				<key>BaseSkip</key>
 				<integer>0</integer>
 				<key>Comment</key>
-				<string>EHO1 Method _PRW to XPRW</string>
+				<string>EH01 Method _PRW to XPRW</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -129,11 +129,11 @@
 			</dict>
 			<dict>
 				<key>Base</key>
-				<string>\_SB.PCI0.EHO2._PRW</string>
+				<string>\_SB.PCI0.EH02._PRW</string>
 				<key>BaseSkip</key>
 				<integer>0</integer>
 				<key>Comment</key>
-				<string>EHO2 Method _PRW to XPRW</string>
+				<string>EH02 Method _PRW to XPRW</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>

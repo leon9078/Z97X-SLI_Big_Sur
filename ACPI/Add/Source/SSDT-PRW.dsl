@@ -1,7 +1,7 @@
 DefinitionBlock ("", "SSDT", 2, "HACK", "_PRW", 0x00000000)
 {
-    External (\_SB_.PCI0.EHO1, DeviceObj)
-    External (\_SB_.PCI0.EHO2, DeviceObj)
+    External (\_SB_.PCI0.EH01, DeviceObj)
+    External (\_SB_.PCI0.EH02, DeviceObj)
     External (\_SB_.PCI0.GLAN, DeviceObj)
     External (\_SB_.PCI0.HDEF, DeviceObj)
 
@@ -26,7 +26,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "_PRW", 0x00000000)
         }
     }
 
-    Scope (\_SB.PCI0.EHO1)
+    Scope (\_SB.PCI0.EH01)
     {
         Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
         {
@@ -47,7 +47,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "_PRW", 0x00000000)
         }
     }
 
-    Scope (\_SB.PCI0.EHO2)
+    Scope (\_SB.PCI0.EH02)
     {
         Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
         {
