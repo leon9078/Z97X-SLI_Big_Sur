@@ -1,0 +1,863 @@
+Entire BIOS mod guide.
+
+Prerequisites:
+
+- Windows 10, version 1607 or later
+- Internet connection
+
+We will work entirely in the Documents folder.
+We need this files/softwares:
+1) 7-Zip latest for Windows [x64] (https://www.7-zip.org/)
+2) Notepad++ latest Installer [x64] (https://github.com/notepad-plus-plus/notepad-plus-plus/releases/latest)
+3) Hextor latest (https://github.com/digitalw0lf/hextor/releases/latest)
+4) Microsoft Visual C++ 2015 Redistributable [x64] (https://www.microsoft.com/en-us/download/details.aspx?id=48145)
+5) Original latest BIOS from OEM website (F10b, Fix memory compatibility) (https://www.gigabyte.com/Motherboard/GA-Z97X-SLI-rev-10/support)
+6) UEFITool NE latest [x64] (https://github.com/LongSoft/UEFITool/releases/latest)
+7) FFS latest (https://github.com/pbatard/ffs/releases/latest)
+8) IFRExtractor RS (https://github.com/LongSoft/IFRExtractor-RS/releases/latest)
+9) HfsPlus latest from acidanthera/OcBinaryData (https://github.com/acidanthera/OcBinaryData)
+10) MMTool 5.02.0024 Mod (https://www.mediafire.com/file/t5w592roapx6wzl/MMTool_Aptio_5.02.0024_Mod.7z/file)
+11) Intel CPU Microcodes specific for socket LGA1150:
+     - 040671_22_22: https://mega.nz/folder/m5tUmDKa#7_PyzIMrS-NCWmxeHEICaQ/file/mglggApD
+     - 0306C3_32_28: https://mega.nz/folder/m5tUmDKa#7_PyzIMrS-NCWmxeHEICaQ/file/b9kCTa6C
+     - 0306C2_32_06: https://mega.nz/folder/m5tUmDKa#7_PyzIMrS-NCWmxeHEICaQ/file/jhl0lSAQ
+     - 0306C1_32_14: https://mega.nz/folder/m5tUmDKa#7_PyzIMrS-NCWmxeHEICaQ/file/Wgk2RQZS
+
+Open CMD;
+> cd Documents
+> curl.exe -LJO "https://www.7-zip.org/a/7z2409-x64.exe"
+> curl.exe -LJO "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.7.4/npp.8.7.4.Installer.x64.exe"
+> curl.exe -LJO "https://github.com/digitalw0lf/hextor/releases/download/v0.14/HextorSetup.exe"
+> curl.exe -LJO "https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe"
+> curl.exe -LJO "https://download.gigabyte.com/FileList/BIOS/mb_bios_ga-z97x-sli_f10b.zip"
+> curl.exe -LJO "https://github.com/LongSoft/UEFITool/releases/download/A68/UEFITool_NE_A68_win64.zip"
+> curl.exe -LJO "https://github.com/pbatard/ffs/releases/download/v1.0/ffs-1.0.7z"
+> curl.exe -LJO "https://github.com/LongSoft/IFRExtractor-RS/releases/download/v1.5.1/ifrextractor_v1.5.1_Windows.zip"
+> curl.exe -LJO "https://github.com/acidanthera/OcBinaryData/raw/refs/heads/master/Drivers/HfsPlus.efi"
+
+Do not close CMD window yet.
+
+Open Microsoft Edge; in the URL type: edge://settings/downloads
+Location > Change; select Documents folder > "Select Folder"
+
+Download MMTool and Intel CPU microcodes through the browser, then close Microsoft Edge.
+
+Open Notepad and paste this text:
+
+@echo off
+mkdir %USERPROFILE%\AppData\Local\Hextor
+>temp.txt echo(FF FE 7B 00 0D 00 0A 00 20 00 22 00 42 00 79 00 74 00 65 00 43 00 6F 00 6C 00 75 00 6D 00 6E 00 73 00 22 00 3A 00 20 00 31 00 36 00 0D 00 0A 00 7D 00
+certutil -f -decodehex temp.txt %USERPROFILE%\AppData\Local\Hextor\Editor.json >nul
+del temp.txt
+
+File > Save > Save as type: All Files (*.*) > File name: Editor.bat > Save
+
+
+
+Then, always in Notepad; File > New Window; paste this text:
+
+@echo off
+>temp.txt echo(FF FE 7B 00 0D 00 0A 00 20 00 22 00 43 00 68 00 65 00 63 00 6B 00 49 00 6E 00 74 00 65 00 72 00 76 00 61 00 6C 00 22 00 3A 00 20 00 30 00 0D 00 0A 00 7D 00
+certutil -f -decodehex temp.txt %USERPROFILE%\AppData\Local\Hextor\Updater.json >nul
+del temp.txt
+
+File > Save > Save as type: All Files (*.*) > File name: Updater.bat > Save
+
+Close both Notepad windows.
+
+Back in CMD, run:
+> Editor.bat
+> Updater.bat
+> del Editor.bat
+> del Updater.bat
+
+Run the executables to install the programs but DO NOT open them.
+
+
+
+I'm going to change some default settings in Notepad++:
+
+Open Notepad++; then Settings > Preferences...
+
+General
+   "Enable pin tab feature" NO
+
+Editing 1
+   "Enable scrolling beyond last line" NO
+   "Enable Copy/Cut Line without selection" NO
+
+Margins/Border/Edge
+   "Line Number" > Display > "Constant width"
+   "Change History" > "Show in the margin" NO
+
+Recent Files History
+   "Recent Files History" > "Max. number of entries:" > 0
+
+Backup
+   "Remember current session for next launch" NO
+
+Auto-Completion
+   "Enable auto-completion on each input" NO
+
+Multi-Instance & Date
+   "Multi-instance settings > "Always in multi-instance mode"
+
+Cloud & Link
+   "Clickable Link Settings" > "Enable" NO
+
+MISC.
+   "Document Switcher (Ctrl+TAB)" > "Enable" NO
+   "Enable Notepad++ auto-updater" NO
+
+Close.
+Plugins > Plugins Admin... > Search: ComparePlus > check it at the bottom > Install > Yes > Yes
+Close Notepad++.
+
+Right click on "mb_bios_ga-z97x-sli_f10b.zip" > 7-Zip > Extract Here
+Right click on "UEFITool_NE_A68_win64.zip" > 7-Zip > Extract Here
+Right click on "ffs-1.0.7z" > 7-Zip > Extract Here
+Right click on "ifrextractor_v1.5.1_Windows.zip" > 7-Zip > Extract Here
+Right click on "MMTool_Aptio_5.02.0024_Mod.7z" > 7-Zip > Extract Here
+
+
+Description:
+
+The idea of creating a custom BIOS file started because I was fed up with my specific Intel LAN MAC address (74:D4:35:E6:42:2C) being "reset" to the default (88:88:88:88:87:88) every time I flashed the original OEM BIOS file using fpt (Intel Flash Programming Tool) without any additional parameter.
+In a bootable USB DOS environment, this command will flash the entire BIOS image including the GbE region with the wrong (default) MAC address:
+> fpt -f Z97XSLI.10b
+
+To avoid replacing my specific MAC address, I need to specify an additional parameter, "-savemac" or "-bios".
+1) fpt -savemac -f Z97XSLI.10b #This will prevent the MAC address from being overwritten
+or
+2) fpt -bios -f Z97XSLI.10b    #This will flash the BIOS region only
+
+Open the OEM BIOS with Hextor; Search > Go To address... > 0x1000; Edit > Select Range... > Range end: +6; Operations > Insert bytes / Fill selection > Hex Pattern: 74 D4 35 E6 42 2C > OK
+File > Save as... > "Z97XSLI_my_MAC_address_74D435E6422C.fd". Make sure the BIOS file extension is ".fd". This is what Apple uses in their firmware and what is supported by AMI's MMTool. Close Hextor.
+
+
+
+Then, I wanted to include the latest CPU microcodes revision for my platform, in order to have the latest fixes from Intel and to avoid having to install "intel-ucode" in any Linux distro, or having a warning during boot time to update CPU microcode to latest revision ["TSC_DEADLINE disabled due to Errata; please update microcode to version: 0x22 (or later)"]
+
+The GUID for CPU microcodes is always: "17088572-377F-44EF-8F4E-B09FFF46A070"
+Open the BIOS with UEFITool; Action > Search... > GUID > "17088572-377F-44EF-8F4E-B09FFF46A070" > Header only > OK. There will be 3 results. The first one inside "FV_MAIN_NESTED" is a fake one with the body containing only FF. We need the other 2. The modules are exactly the same, they are just in different locations/volumes.
+Double click in one of the 2 results. On the right take note of the following data, it will be needed later for GenFfs:
+- Fixed: Yes
+- File GUID: 17088572-377F-44EF-8F4E-B09FFF46A070
+- Type: 01h
+- Attributes: 48h
+- Data checksum: 26h, valid
+
+Close UEFITool.
+
+In the UEFI Platform Initialization Specification (https://uefi.org/specs/PI/1.8A/V3_Design_Discussion.html#firmware-file-types), we can decode the filetype. 0x01 is "EFI_FV_FILETYPE_RAW"
+The module is "Fixed" but the Fixed bit is not set (0x04).
+Attributes has the Data Checksum bit set (0x40), indeed it has a value different than AA (0x26).
+There is also an unknown 3rd bit set (0x08), which is invalid...
+So the final Attributes value will be 0x44:
+- FFS_ATTRIB_FIXED 0x04
+- FFS_ATTRIB_CHECKSUM 0x40
+
+0x04 + 0x40 = 0x44
+
+Now, back to CMD;
+> GenFfs --outputfile Updated_CPU_Microcodes.ffs --filetype EFI_FV_FILETYPE_RAW --fileguid "17088572-377F-44EF-8F4E-B09FFF46A070" --fixed --checksum --sectionfile cpu40671_plat22_ver00000022_2019-11-12_PRD_00B9F4B1.bin --sectionfile cpu306C3_plat32_ver00000028_2019-11-12_PRD_DBD4CFD1.bin --sectionfile cpu306C2_plat32_verFFFF0006_2012-10-17_PRE_30531EB4.bin --sectionfile cpu306C1_plat32_verFFFF0014_2012-07-25_PRE_E86E3EB1.bin --verbose
+
+The result ffs file will be used to replace the corresponding modules with MMTool.
+
+Now, let's work on ACPI.
+
+I'm going to install a hackintosh on this board, so I will use OpenCore > ACPI > Patch to create "proxy" patches, where the original method is patched in the original table and is implemented in the patched table.
+My board is an Intel 9-series model, so it has USB EHCI controllers. Since OS X 10.11, the recommended behavior it to disable the default injectors in order not to match the ACPI names on the original MAC model (EHC1, EHC2, XHC1).
+My XHCI controller is already named "XHC", so it will not match for XHC1. I need to rename EHC1 to EH01 and EHC2 to EH02. This type of patch changes the ACPI name of the USB controllers globally (to every operating system), so it's not possible to use "_OSI" to specify only for macOS.
+This is a global rename and not a Method to hotpatch... Moreover, this rename will not harm any other OS (Windows, Linux, etc.).
+In my specific board, USB EHCI controllers are defined in DSDT and not in any other SSDT.
+So the idea is to create a custom DSDT table with the above renames and then insert directly into the BIOS!
+
+We need to extract the original DSDT from the BIOS. To do so open UEFITool and open the BIOS file. We need to find in which module the DSDT is located in.
+Action > Search... > Text > "EHC", uncheck "Unicode", check "Case sensitive". There are 20 results, being inside AmiBoardInfo/.../PE32 image section. 11 for EHC1 and 9 for EHC2.
+Double click in one of them, it will select "PE32 image section". Select the "Compressed section" above and check on the right the "Compression algorithm". If it is "None" we can extract the entire module "As is", otherwise we need to extract "UnCompressed" later in MMTool. It says "None", so we have to extract As is.
+Leave UEFITool open, but open MMTool 5.02.0024 Mod and load the BIOS file. Select "Extract" tab, click on Volume: 02:01-00, Index: 0C, FileName: AmiBoardInfo. "Browse", give a name such as "0C-AmiBoardInfo.ffs", Extract As is, Extract. Close.
+
+Open the result file with Hextor.
+
+Now, before going on, I want to bookmark the DSDT table header. As we can see in ACPI spec (https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#differentiated-system-description-table-dsdt), this header is 36 bytes long.
+The first 4 bytes are of the signature 'DSDT'.
+Search > Find/Replace... > Find: DSDT{byte::32} > Text > Extended syntax > List > Search pattern found 1 time(s) > OK > Find next >>, close Find/Replace window.
+In the right part of Hextor, click on "Bookmarks", then click the "+" icon to create the bookmark.
+
+
+
+Now we can proceed to make our Find/Replace edits.
+
+Search > Find/Replace... > Find: EHC > Text > List. Search pattern found 20 time(s) > OK
+Expand "Replace" section; Replace with: EH0 > Replace all. Search pattern replaced 20 time(s) > OK
+Close Find/Replace window.
+
+
+I also want to increare the "OEM Revision" of the DSDT table. That's because I'm actually making an edit that creates a diff to the original DSDT.
+As we can see in ACPI spec (https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#differentiated-system-description-table-dsdt), "OEM Revision" is at offset 24 from the beginning of the DSDT table and is 4 bytes length.
+
+
+Click back to "Bookmarks" tab on the right and take note of "Position". It says 2653.
+Search > Go To address... > 2653
+Now we are at the beginning of our DSDT table header (We are at offset 0). We have to go to offset 24
+So; Search > Go To address... > +24
+
+This is 4 bytes length, so the full number is: 88 00 00 00 (Little Endian format). In Big Endian format is: 00 00 00 88. This is an HEX number, so 0x00000088 is the value when the ACPI is decompiled.
+
+Now we increase this value by one.
+Edit > Select Range... > Range end: +4; Operations > Modify with expression > Apply expression to selected: dwords > x+1 > OK
+
+
+
+
+
+Now, because we made this edits, we need to calculate the new DSDT checksum. If we don't do that, the final ACPI table will be corrupted... I will explain how to manually calculate it and overwrite into the original value.
+As we can see in ACPI spec (https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#differentiated-system-description-table-dsdt), "Checksum" is at offset 9 from the beginning of the DSDT table.
+As before; Search > Go To address... > 2653; Search > Go To address... > +9
+The original "Checksum" value is 0xDC.
+
+Now the description of the Checksum field is: "Entire table must sum to zero.". This checksum is an 8-bit checksum (https://minuszerodegrees.net/misc/8-bit%20checksum.htm)
+So we basically made 2 edits:
+1) Find/Replace 20 instances of "EHC" to "EH0", actually we just replaced 1 character: the letter "C" with the number "0" 20 times.
+2) Increase "OEM Revision" value by 1.
+
+"C" and "0" are ASCII and the entire checksum is calculated in HEX.
+ASCII: "C" > HEX: 0x43
+ASCII: "0" > HEX: 0x30
+
+From 0x43 to 0x30 there are 0x13 bytes to subtract (-0x13).
+Remember, "Entire table must sum to zero.", so we need to add 0x13 bytes (+0x13) to the original checksum value (0xDC).
+But this is for 1 result, we need to made the sum 20 times! This is in detail how the change is made.
+
+n times | diff checksum sum | result
+   01        0xDC + 0x13    = 0xEF
+   02        0xEF + 0x13    = 0x102 // Since this is an 8-bit checksum we need to keep only the least significant 8 bits. So the result is 0x02
+   03        0x02 + 0x13    = 0x15
+   04        0x15 + 0x13    = 0x28
+   05        0x28 + 0x13    = 0x3B
+   06        0x3B + 0x13    = 0x4E
+   07        0x4E + 0x13    = 0x61
+   08        0x61 + 0x13    = 0x74
+   09        0x74 + 0x13    = 0x87
+   10        0x87 + 0x13    = 0x9A
+   11        0x9A + 0x13    = 0xAD
+   12        0xAD + 0x13    = 0xC0
+   13        0xC0 + 0x13    = 0xD3
+   14        0xD3 + 0x13    = 0xE6
+   15        0xE6 + 0x13    = 0xF9
+   16        0xF9 + 0x13    = 0x10C => 0x0C
+   17        0x0C + 0x13    = 0x1F
+   18        0x1F + 0x13    = 0x32
+   19        0x32 + 0x13    = 0x45
+   20        0x45 + 0x13    = 0x58 <= final checksum!
+
+This is the final checksum for the entire EHC to EH0 edit.
+
+But remember, we also increased the "OEM Revision" by 1!
+So we have to remove -1 from that Checksum. 0x58 - 0x01 = 0x57
+Final Checksum will be 0x57!!!
+
+
+
+So the final DSDT checksum is 0x57!
+To reach this value faster, we can do this way. 20 is the number of instances for Find/Replace in our traditional decimal system. We need to think in HEX system, so we have to convert this value (20) in HEX format.
+DEC: 20 > HEX 0x14
+We multiply 0x13 (diff size) by 0x14, result = 0x17C
+Now we sum original DSDT checksum (0xDC) with 0x17C minus 0x01 (OEM Revision increased), result = 0x257; select the least significant 8 bits = 0x57
+
+Back in Hextor; Edit > Select Range... > Range end: +1; Operations > Insert bytes / Fill selection > Hex Pattern: 57 > OK
+
+
+Now we have to check if FFS "Attributes" has the "FFS_ATTRIB_CHECKSUM" bit set (0x40) and/or "Data checksum" has a value different than AA.
+In UEFI Platform Initialization Specification (https://uefi.org/specs/PI/1.8A/V3_Code_Definitions.html#efi-ffs-file-header) => Related Definitions => File =>
+=> "If the FFS_ATTRIB_CHECKSUM [...] bit of the Attributes field is set to one, the IntegrityCheck.Checksum.File field is an 8-bit checksum of the file data. If the FFS_ATTRIB_CHECKSUM bit [...] is cleared to zero, the IntegrityCheck.Checksum.File field must be initialized with a value of 0xAA."
+"#define FFS_ATTRIB_CHECKSUM               0x40"
+
+Go back to UEFITool; select "AmiBoardInfo" module. In the right we see "Attributes: 40h" and "Data checksum" value different than AA (25).
+Close UEFITool.
+So we have to calculate also the FFS Data checksum. As with the DSDT table checksum, this is still an 8-bit checksum.
+The data checksum value is located inside ffs file header at offset 11h
+(https://uefi.org/specs/PI/1.8A/V3_Code_Definitions.html#efi-ffs-file-header) => Prototype
+   - EFI_GUID                  0x00 - 0x0F (16 bytes)
+   - EFI_FFS_INTEGRITY_CHECK   
+      - Header                 0x10        (1 byte)
+	  - File                   0x11        (1 byte)
+
+In Hextor; Search > Go To address... > 0x11. Value is 0x25
+Now there are 22 bytes changed:
+20x EHC to EH0            (0x43 to 0x30) = -0x13 * 0x14 = -0x17C
+ 1x OEM Revision increase (0x88 to 0x89) = +0x01
+ 1x New DSDT checksum     (0xDC to 0x57) = -0x85
+
+-0x17C + 0x01 - 0x85 = -0x200
+0x25 + 0x200 = 0x225, select the least significant 8 bits = 0x25
+
+So in this case the data checksum value remains the same (0x25)
+
+Save the file to something descriptive, like "0C-AmiBoardInfo_DSDT_mod.ffs". Close Hextor.
+
+
+
+
+
+Later I wanted to fix this ACPI issue I have in DSDT:
+
+    External (MDBG, IntObj)
+
+    Method (ADBG, 1, Serialized)
+    {
+        If (CondRefOf (MDBG))
+        {
+            Return (MDBG) /* External reference */
+            Arg0
+        }
+
+        Return (Zero)
+    }
+
+MDBG is recognized as a "IntObj" which is wrong. It is a "MethodObj", since it contains Arg0 in the Return!
+So I tried to search inside UEFITool if there is an ACPI table which has this Method and I found 1!
+
+Open again UEFITool and load the BIOS file; Action > Search... > Text > "MDBG", uncheck "Unicode", check "Case sensitive".
+
+There are 3 results, 2 inside AmiBoardInfo/.../PE32 image section (DSDT). 1 inside an unknown GUID/.../Raw section. If we double click on it, right click on "Raw section" > Body hex view... we see it's a SSDT!
+Now close UEFITool.
+
+So we know there is this ACPI table inside the BIOS. We need to find a way to activate this SSDT at runtime. The only way is by searching for a hidden BIOS setting.
+Let's try with the IFR extractor to find hidden BIOS settings.
+Open back UEFITool and load the BIOS file. Search for a known BIOS setting like: "XHCI Mode". (Refer to the GIGABYTE user manual => Chapter 2: BIOS Setup => Peripherals)
+Action > Search... > Text > "XHCI Mode", check "Unicode", check "Case sensitive". There will be 1 result inside Setup/.../MiniSetupResourceSection.
+Double click on it, it will select "MiniSetupResourceSection".
+Click on "Compressed section" first, check on the right "Compression algorithm", it says "LZMA". We need to uncompress the module.
+Leave UEFITool open.
+Now, open again MMTool 5.02.0024 Mod and load the BIOS file. Click on "Extract" tab, click on Volume: 01, Index: 04, FileName: Setup. "Browse", give a name such as "04-Setup.ffs", Extract UnCompressed. Extract. Close.
+
+Since the module it's compressed, we can not directly modify data inside the file. We need to uncompress it first, do the edit, then compress it back again.
+But, in MMTool 5.02.0024 Mod, when we compress back a module there are 2 caveats:
+1) The compression algorithm will ALWAYS be "Tiano"
+2) EVERY section inside the the module will have a "Compressed section" parent.
+
+The former is not a big deal, "Tiano" compression is a bit less efficient than "LZMA" one, in terms of compression ratio.
+The latter means that every section of the module will be in a "Compressed section". This is an example of the Setup module, like we see in UEFITool.
+
+Original
+
+Setup
+   DXE dependency section
+   Compressed section (LZMA)
+      PE32 image section
+      MiniSetupResourceSection
+      UI section
+
+After the "Insert Compressed" in MMTool
+
+Setup
+   Compressed section (Tiano)
+      DXE dependency section
+      PE32 image section
+      MiniSetupResourceSection
+      UI section
+
+So, to maintain the same structure as the original, we are going to create a new .ffs module based off the "Extract UnCompressed" one we just extraced; this time we do not include "DXE dependency section" for now; we will still extract it because it's needed later. Of course we need to use GenFfs again for this task.
+
+Open the UnCompressed file "04-Setup.ffs" in Hextor. Select "Bookmarks" tab on the right.
+What we need to do is split the entire module into different sections, the one listed by UEFITool.
+Every module is made out of a Header and a Body. The header contains metadata info, the body contains the different sections.
+Then, also every section is made out of a Header and a Body.
+
+FFS
+   - Header
+   - Body
+   0h section
+      - Header
+	  - Body
+   1h section
+      - Header
+	  - Body
+   2h section
+      - Header
+	  - Body
+   [...]
+
+
+We do not need the ffs header, because we are going to recreate it with GenFfs later.
+
+So, in UEFITool, select "DXE dependency section", check on the right:
+- "Offset", it says "18h"
+- "Full size", it says "16h (22)"
+
+In Hextor; Go To address... > 0x18, then Edit > Select Range... > Range end: +22. On the right, click on the "+" sign to create the 1st bookmark.
+
+Back in UEFITool select "PE32 image section", right click "Hex view...", select the first 16 HEX bytes from offset 00000000, Ctrl+C to copy, close the Hex view window.
+Back in Hextor; Search > Find/Replace... > Ctrl+V > HEX > Find next >> > << Find prev. Close the Find/Replace window.
+By doing this way, we go to the beginning offset of that find search.
+In UEFITool, check on the right "Full size: 43E04h (278020)"
+In Hextor; Edit > Select range... > Range end: +278020. On the right, click on the "+" sign to create the 2nd bookmark.
+
+UEFITool, "MiniSetupResourceSection", right click "Hex view...", select the first 16 HEX bytes from offset 00000000, Ctrl+C to copy, close the window.
+Hextor; Search > Find/Replace... > Ctrl+V > HEX > Find next >> > << Find prev
+Close Find/Replace window.
+UEFITool, check on the right "Full size: 33D00Ch (3395596)"
+Hextor; Edit > Select range... > Range end: +3395596. On the right, click on the "+" sign to create the 3rd bookmark.
+
+Lastly, we have "UI section", "Hex view", select the HEX range from 00000000, Ctrl+C, close.
+Hextor; Search > Find/Replace... > Ctrl+V > HEX > Find next >> > << Find prev
+Close Find/Replace window.
+UEFITool, check on the right "Full size: 10h (16)"
+Hextor, Edit > Select range... > Range end: +16. On the right, click on the "+" sign to create the 4th bookmark.
+
+Now, we can easily use shortcuts "Ctrl+1" through 4 to quickly jump to our custom selections.
+Ctrl+1 for "DXE dependency section"
+Ctrl+2 for "PE32 image section"
+Ctrl+3 for "MiniSetupResourceSection"
+Ctrl+4 for "UI section"
+
+Hit "Ctrl+1", then File > Save selection as... > "04-Setup_DXE_dependency_section.sec"
+Hit "Ctrl+2", then File > Save selection as... > "04-Setup_PE32_image_section.sec"
+Hit "Ctrl+3", then File > Save selection as... > "04-Setup_MiniSetupResourceSection.sec"
+Hit "Ctrl+4", then File > Save selection as... > "04-Setup_UI_section.sec"
+
+We can safely close Hextor for now.
+
+Now that we have the files, we will extract the IFR from MiniSetupResourceSection in verbose mode (showing HEX / offsets)
+
+Back to CMD;
+> ifrextractor 04-Setup_MiniSetupResourceSection.sec verbose
+Now we need to search for something descriptive inside those *.txt files.
+We can use Notepad++ "Find in Files..." feature to search some text in multiple files at once. Select the full directory path, uncheck "Match case", search mode "normal"
+Search for something descriptive like "mdbg", "adbg" or "debug". We found 1 result in 1 text file!
+
+0x337726: 		OneOf Prompt: "ACPI Debug", Help: "Open a memory buffer for storing debug strings.Use method ADBG to write strings to buffer.", QuestionFlags: 0x10, QuestionId: 0x318, VarStoreId: 0x1, VarOffset: 0x6EA, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x0, Step: 0x0 { 05 A6 1C 0F 1D 0F 18 03 01 00 EA 06 10 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 }
+0x33774C: 			OneOfOption Option: "Disabled" Value: 0, Default, MfgDefault { 09 0E 04 00 30 00 00 00 00 00 00 00 00 00 }
+0x33775A: 			OneOfOption Option: "Enabled" Value: 1 { 09 0E 03 00 00 00 01 00 00 00 00 00 00 00 }
+0x337768: 		End  { 29 02 }
+
+So this is a hidden BIOS setting that will enable that SSDT in the ACPI stack and remove the DSDT decompile error!
+
+Now, before going on, I will reference some guides I found online that explain how to edit BIOS default settings, special thanks to user Lost_N_BIOS!
+(https://winraid.level1techs.com/t/determine-configurable-aperture-size-from-bios-file/34246/5) => "There is three ways a BIOS can pull a default setting value, in Setup [...], or AMITSE/SetupData, or NVRAM."
+(https://winraid.level1techs.com/t/request-maximus-xi-hero-unlock-amibcp/33743/4) => "[...] there is three main possible places to change them to enabled/disabled [...] Those are setup module, AMITSE/SetupData module (This is what AMIBCP changes), and finally NVRAM."
+(https://winraid.level1techs.com/t/request-maximus-xi-hero-unlock-amibcp/33743/8) => "(NVRAM and all it’s possible locations, Setup Module, AMITSE/SetupData)"
+
+We already found the Setup module above. I will explain how to make the edit, then proceed to search for AMITSE/SetupData and NVRAM locations!
+Open "04-Setup_MiniSetupResourceSection.sec" with Hextor; Search > Go To address... > 0x33774C. Here there will be the HEX representation of the "Disabled" OneOfOption; it is 14 bytes length. The next 14 bytes are the one of the "Enabled" OneOfOption.
+What we need to do is change the default option from "Disabled" to "Enabled". The HEX byte representing the default option is at offset 4h.
+Search > Go To address... > +4 > OK; Edit > Select Range... > +1 > OK; Operations > Modify with expression > x-0x30
+We have 00 now!
+09 0E 04 00 30 <-- change the 5th byte to 00
+
+Next 14 bytes, select the 5th byte
+09 0E 03 00 00 <-- change the 5th byte to 30
+
+Search > Go To address... > 0x33775A (beginning offset of the Enabled setting)
+Search > Go To address... > +4 > OK; Edit > Select Range... > +1 > OK; Operations > Modify with expression > x+0x30
+We have 30 now!
+
+Save the entire file to something like "04-Setup_MiniSetupResourceSection_ACPI_Debug.sec" and close Hextor.
+Back in UEFITool, select Setup module, on the right take note of the following info:
+- Fixed: No
+- File GUID: 899407D7-99FE-43D8-9A21-79EC328CAC21
+- Type: 07h
+- Attributes: 40h
+- Data checksum: E8h, valid
+
+(https://uefi.org/specs/PI/1.8A/V3_Design_Discussion.html#firmware-file-types) => 0x07 is "EFI_FV_FILETYPE_DRIVER"
+
+Close UEFITool.
+
+Now we need to use GenFfs again to create a temporary new uncompressed .ffs module that contains everything except "DXE dependency section".
+Back to CMD;
+> GenFfs --outputfile 04-Setup_UnCompressed_no_DXE_dep_ACPI_Debug.ffs --filetype EFI_FV_FILETYPE_DRIVER --fileguid "899407D7-99FE-43D8-9A21-79EC328CAC21" --checksum --sectionfile 04-Setup_PE32_image_section.sec --sectionfile 04-Setup_MiniSetupResourceSection_ACPI_Debug.sec --sectionfile 04-Setup_UI_section.sec --verbose
+
+Now, open MMTool again. "Load image" > OEM BIOS file. "Delete" tab. Volume: 01 Index: 04 FileName: Setup. Delete. "Insert" tab, browse the new ffs file just created, "Insert Compressed", Insert. "Save Image as.." > "temporary" > Save. Close.
+
+When inserting modules MMTool will add it at the end of the module, so before Setup was at offset 04 (before S3Restore), now at offset 05 (after S3Restore).
+
+Open MMTool again, load "temporary.fd". "Extract" tab, select Volume: 01 Index: 05 FileName: Setup. Give it a name like "04-Setup_Asis_Tiano_no_DXE_dep_ACPI_Debug.ffs". Extract As is, Extract. Close.
+
+Open the just saved .ffs file with Hextor, we need to remove the ffs header.
+Search > Go To address... > 0x18. Select all bytes from that offset till the end of the file using Ctrl+Shift+End shortcut. File > Save selection as... > "04-Setup_Asis_Compressed_section_Tiano_ACPI_Debug.sec"
+Close Hextor.
+
+Create the new definitive .ffs module. (With DXE dependency section and the Compressed section with Tiano algorithm).
+Back to CMD;
+> GenFfs --outputfile 04-Setup_Asis_Tiano_ACPI_Debug.ffs --filetype EFI_FV_FILETYPE_DRIVER --fileguid "899407D7-99FE-43D8-9A21-79EC328CAC21" --checksum --sectionfile 04-Setup_DXE_dependency_section.sec --sectionfile 04-Setup_Asis_Compressed_section_Tiano_ACPI_Debug.sec --verbose
+
+> del temporary.fd
+
+We have finished with Setup module! We will use that file (04-Setup_Asis_Tiano_ACPI_Debug.ffs) later.
+
+
+
+
+
+Now we need to find AMITSE/SetupData. This section is what AMIBCP tool changes. We will change the equivalent of AMIBCP's Failsafe and Optimal value defaults.
+(https://winraid.level1techs.com/t/msi-z490-unify-bios-mod/35975/44) => "Here, I will try to explain [...] about AMITSE/SerupData edit, you use “QuestionID” backwards (little endian), to find area to edit, then [...], in the long string for setting, after 05 D1 for example, next four bytes are Label ID and Help Label ID, these two sets of bytes will always be after/near the correct location of the QuestionID you find to edit."
+
+
+This module has a signature at the beginning of the file "$SPF"
+(https://winraid.level1techs.com/t/request-how-to-access-locked-hidden-bios-menu-settings/32688/224) => "AMITSESetupData module ($SPF signature at the beginning of the file)"
+So, open UEFITool again and load "Z97XSLI_my_MAC_address_74D435E6422C.fd" (the updated BIOS file); Action > Search... > Text > "$SPF", uncheck "Unicode", check "Case sensitive". There will be 1 result inside AMITSE/.../setupdata.
+
+Double click on it, it will select "setupdata".
+Click on "Compressed section" above, check on the right "Compression algorithm", it says "None". We have to extract the module "As is".
+Select "AMITSE" above, and check on the right:
+1) Attributes: 40h
+2) Data checksum: 90h, valid
+
+Attribute bit set (0x40) AND Data checksum value different than AA. So we know this module need to calculate file checksum, this info is useful later.
+Close UEFITool.
+
+Now, open MMTool 5.02.0024 Mod and load the BIOS. "Extract" tab, click on Volume: 02:01-00, Index: 81, FileName: AMITSE. Give a name such as "81-AMITSE.ffs", Extract As is, Extract. Close.
+
+Open the just extracted file with Hextor. Now we need to find where are the 2 HEX bytes to change. Remember, we want to change "ACPI Debug" from "Disabled" to "Enabled" in both Failsafe and Optimal value.
+Open the "04-Setup_MiniSetupResourceSection.sec.1.0.en-US.ifr.txt" file where we previously found the ACPI Debug setting. Here we are interested in 3 elements:
+1) QuestionId
+2) Label ID
+3) Help Label ID
+
+QuestionId value is 0x318
+To find "Label ID" and "Help Label ID" we need to go at the end of the line, where inside the curly brackets there is the HEX representation of that specific setting (OneOf Prompt: "ACPI Debug").
+{ 05 A6 1C 0F 1D 0F 18 03 ... }
+Label ID is the 2 bytes at offset 2-3h: 1C 0F
+Help Label ID is the 2 bytes at offset 4-5h: 1D 0F
+
+As we can notice the first byte of "Help Label ID" is ALWAYS one value more than the "Label ID" one. 1D > 1C
+
+Now we need to create our Find sequence in Hextor in order to find our 2 HEX bytes to flip from 00 (Disabled) to 01 (Enabled).
+
+So, we start with the QuestionId value in little endian (backwards). The initial value is 0x318. We want to pad the value with a leading zero to reach even digits, so 0x0318.
+Now we separate the digits, 0x03 0x18. Now Little Endian became 0x18 0x03.
+
+So, the initial (QuestionId) sequence to Find is: \x18\x03
+
+Now there are next 18 HEX bytes to match, so we use "Extended syntax" feature in Hextor. The syntax will be: {byte::18}
+Then there is "Help Label ID" value: \x1D\x0F
+Then 26 HEX bytes to match, syntax in Hextor: {byte::26}
+Then "Label ID" value: \x1C\x0F
+Lastly, 2 HEX bytes to match; we can short the syntax: ??
+
+So, the final sequence in Hextor is: \x18\x03{byte::18}\x1D\x0F{byte::26}\x1C\x0F??
+Search > Find/Replace... > Find: \x18\x03{byte::18}\x1D\x0F{byte::26}\x1C\x0F?? > Text > Extended syntax > List > Search pattern found 1 time(s) > OK => Find next >> => Find next >>
+So we are clicking on it (Find next >>) twice to jump to the byte immediately after the selection.
+Close the Find/Replace window; Edit > Select Range... > Range end: +2; Operations > Modify with expression > Expression: x+0x01 > OK
+
+Now that we made this edit we have to recalculate the Data Checksum. As written above, the Data Checksum value is located inside ffs file header at offset 11h
+So, in Hextor; Search > Go To address... > 0x11. Original value is 0x90
+We changed the Failsafe and Optimal value from 00 to 01
+1) Failsafe HEX: 00 => 01 (+0x01)
+2) Optimal HEX: 00 => 01 (+0x01)
+
+So we added +0x02 HEX bytes
+The final "Data checksum" value is: 0x90 - 0x02 = 0x8E
+
+So, in Hextor; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x-0x02 > OK
+
+Save the new .ffs file to something descriptive like "81-AMITSE_ACPI_Debug.ffs"
+Close Hextor.
+
+
+
+
+Next, we need to modify NVRAM. As Lost_N_BIOS noted, there are usually multiple locations to look at.
+The best way to found them is by searching a specific GUID (4599D26F-1A11-49B8-B91F-858745CFF824), which is AmiStandardDefaultsVariable
+Open UEFITool and load the BIOS file; Action > Search... > GUID > "4599D26F-1A11-49B8-B91F-858745CFF824" > Header and body > OK
+There will be multiple results. We have to choose the ones that end with "/GUID store". There are 2 results:
+1) NVRAM/GUID store
+2) Defaults/.../GUID store
+
+Double click on the first result. Let's start to analize it.
+As we can see the module does not have a "Compressed section" neither inside the module itself nor inside the Volume Index. So in this case we can simply skip the whole procedure of extracting the module with MMTool, modify, then replace it back.
+We can directly make the NVRAM edit inside the full BIOS file without extra consequences!!!
+
+Also, click on "NVRAM". Let's check this important info on the right:
+
+Fixed: Yes
+Base: 200048h
+Attributes: 00h
+Header checksum: 36h, valid
+Data checksum: AAh, valid
+
+So we know that the module is "Fixed", but the "Attributes: 00h" is wrong...
+As we can see in official UEFI Platform Initialization spec (https://uefi.org/specs/PI/1.8A/V3_Code_Definitions.html#efi-ffs-file-header) => Related Definitions => // EFI_FFS_FILE_ATTRIBUTES => #define FFS_ATTRIB_FIXED                  0x04
+So, when the module is Fixed, the 2nd bit is set (0x04). This time we have to manually fix the Attribute HEX byte from 00 to 04.
+Since we are making an edit inside the "Header" of the module (first 24 bytes), we have to recalculate the "Header checksum" this time.
+Attribute value 0x00 => 0x04 (+0x04)
+Original Header checksum value is 0x36
+New Header checksum value is 0x36 - 0x04 = 0x32
+
+In Attributes, the 6th bit (Data checksum - 0x40) is not set. Indeed, Data checksum value is initialized to 0xAA.
+
+Open "Z97XSLI_my_MAC_address_74D435E6422C.fd" with Hextor; Search > Go To address... > 0x200048 (Base value)
+"Header checksum" is at offset 0x10. So; Search > Go To address... > +0x10; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x-0x04
+New "Header checksum" value will be 32.
+
+"Attributes" is at offset 0x13, but from the Base offset (0x200048); now we are at offset 0x10... So we need to add only +0x03. So; Search > Go To address... > +0x03; Edit > Select Range > Range end: +1; Operations > Modify with expression > x+0x04
+New "Attributes" value will be 04.
+
+
+Now we can focus on finding the exact offset where "ACPI Debug" value resides in NVRAM.
+
+Open again "04-Setup_MiniSetupResourceSection.sec.1.0.en-US.ifr.txt" file, go to the "ACPI Debug" line. This time search for:
+- VarStoreId
+- VarOffset
+
+VarStoreId value is 0x1
+Now in Notepad++, Search this text "VarStoreId: 0x1, Size". There will be 1 result!
+In this line, we are interested in the following values:
+- Name
+- Size
+- VarStore Guid
+
+Name is "Setup"
+Size is 0x745
+VarStore Guid is "EC87D643-EBA4-4BB5-A1E5-3F3E36B20DA9"
+
+We have to search for the NULL terminated name of the variable: "Setup\x00"
+This is a mix of ASCII: "Setup" and HEX "0x00". UEFITool search engine does not support Extended syntax like Hextor, therefore we have to convert the entire ASCII string to HEX first.
+We can use this website (https://tomeko.net/online_tools/ascii.php?lang=en) to convert an ASCII string to HEX.
+ASCII: "Setup" => HEX: "5365747570"
+Now we append the NULL terminated byte (\0) to the result: "536574757000"
+So now, back in UEFITool, Action > Search... > Hex pattern > "536574757000" > Header and body. There will be a bunch of results. We are interested in the NVRAM ones (first 3 results).
+Double click each entry and look on the "Text" column. We need to find the only one that has "Setup" name, and on the right:
+- Variable GUID: EC87D643-EBA4-4BB5-A1E5-3F3E36B20DA9
+- Body size: 745h (1861)
+
+It's the first entry!
+Here we need:
+- Base: 200077h
+- Header size: 11h (17)
+
+"Base" is the starting offset of the module since the beginning of the large BIOS file. We also need "Header size" to go to the beginning offset of the body. Remember, Body size: 745h!
+So, 0x200077 + 0x11 = 0x200088
+
+Back in Hextor; Go To address... > 0x200088
+
+Now we need the "ACPI Debug" VarOffset value
+Back to Notepad++, search again for "ACPI Debug". In that line the value is 0x6EA
+Back to Hextor again, Go to address... > +0x6EA; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x+0x01 > OK
+
+File > Save as... > "Z97XSLI_my_MAC_address_74D435E6422C_NVRAM_ACPI_Debug.fd". Close Hextor.
+
+Back in CMD, run:
+> del Z97XSLI_my_MAC_address_74D435E6422C.fd
+
+Ok, so we are done with the first of the two NVRAM locations!
+
+Now we need to go to the second one, "Defaults".
+In UEFITool, double click on the second result of "GUID pattern [...] Defaults/.../GUID store".
+Click on "Compressed section" above. On the right "Compression algorithm: None". We can extract the module "As is".
+Unlike the first result (NVRAM), this time the "Defaults" module resides in a Volume which has a "Compressed section" LZMA. So it's not possible to directly edit the whole BIOS file like before.
+We need to "Extract" with MMTool, make the edit, Replace.
+
+Open MMTool and load "Z97XSLI_my_MAC_address_74D435E6422C_NVRAM_ACPI_Debug.fd" BIOS file; "Extract", Volume: 02:01-00 Index: 07; "Browse", save to something descriptive like "07.ffs", Extract As is, Extract. Close.
+Back in UEFITool, before working on making the actual edit, click on "Defaults", check again this important info on the right:
+
+Fixed: Yes
+Attributes: 40h
+Header checksum: D7h, valid
+Data checksum: 51h, valid
+
+The module is "Fixed" but the fixed bit (0x04) is not set in "Attributes"...
+So, we manually have to change the original "Attributes" value from 40 to 44.
+In UEFI Platform Initialization Specification (https://uefi.org/specs/PI/1.8A/V3_Code_Definitions.html#efi-ffs-file-header) => Prototype
+   - EFI_GUID                  0x00 - 0x0F (16 bytes)
+   - EFI_FFS_INTEGRITY_CHECK   
+      - Header                 0x10        (1 byte)
+	  - File                   0x11        (1 byte)
+   - EFI_FV_FILETYPE           0x12        (1 byte)
+   - EFI_FFS_FILE_ATTRIBUTES   0x13        (1 byte)
+   [...]
+
+Open Hextor and load "07.ffs" file, create a Bookmark to make things clearer. On the right click on "Bookmarks" tab. Go To address... > 0; Edit > Select Range... > Range end: 24 > OK
+Click on the "+" icon to create the bookmark. This will be our ffs header.
+
+Now, Search > Go To address... > 0x13 (EFI_FFS_FILE_ATTRIBUTES); Edit > Select Range... > Range end: +1; Operations > Modify with expression > x+0x04 > OK
+Now that we added +0x04, we also need to remove -0x04 to the "Header checksum" original value.
+"Header checksum" is at byte 0x10. So, Go To address... > 0x10
+Value is 0xD7; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x-0x04 > OK
+
+The module has the "Data checksum" bit (0x40) set, so we need to make the edit to the Data checksum later, after we edit the default value.
+
+Back in UEFITool, go to the "Search" tab. We are now interested in the 3 Defaults results in Hex pattern.
+As before, double click them until you found on the "Text" column "Setup" with this informations on the right:
+- Variable GUID: EC87D643-EBA4-4BB5-A1E5-3F3E36B20DA9
+- Body size: 745h (1861)
+
+As before it's the 1st result!!
+
+Now, we need to calculate the offset to go later in Hextor. This time is a little bit difficult than before.
+We need to calculate the "Header size" sum of the sections above until main "Defaults" module.
+In other words, after we take note of the "Header size" up arrow, to go to the preceding section:
+On the left (Structure tab) | On the right (Information tab)
+EfiSetupVariableGuid        | Header size: 11h (17)
+AmiStandardDefaultsVariable | Header size: 17h (23)
+Raw section                 | Header size: 4h (4)
+Compressed section          | Header size: 9h (9)
+Defaults                    | Header size: 18h (24)
+
+Now sum each "Header size": 0x11 + 0x17 + 0x04 + 0x09 + 0x18 = 0x4D
+Close UEFITool.
+
+Back in Hextor; Search > Go To address... > 0x4D
+
+We are at the beginning of the "Setup" body section (offset 0x00). We need to edit "ACPI Debug" from 00 (Disabled) to 01 (Enabled) which is at offset 0x6EA; Search > Go to address... > +0x6EA; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x+0x01 > OK
+
+Now we need to edit the "Data checksum", we added +0x01 to that offset, we need to remove -0x01 from original Data checksum.
+"Data checksum" is at byte 0x11. So, Go to address... > 0x11
+Value is 0x51; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x-0x01 > OK
+
+Save the file as "07_ACPI_Debug.ffs". Close Hextor.
+
+We are done with the second of the two NVRAM locations!
+
+
+
+
+So, at this point we worked on the ACPI changes/issues.
+
+Now I want to remove 5 "Padding file" from the BIOS. They appear in the bottom "Parser" tab EVERY time I load the BIOS in UEFITool.
+If you double click on each of them, it will bring you to the location of the module. Take notes of the following informations on the right side.
+- Fixed
+- Attributes
+- Data checksum
+                                 | Fixed | Attributes | Data checksum
+1) 01_01      | Microcode (real) |  Yes  |     48h    | 26h
+2) 0201-00_02 | Microcode (fake) |   No  |     08h    | AAh
+3) 03_02      | Microcode (real) |  Yes  |     48h    | 26h
+4) 03_0B      | BiosAc           |   No  |     28h    | AAh
+5) 03_32      | TxtPeiAp         |   No  |     28h    | AAh
+
+The first and third result will be replaced by my new ffs generated module containing updated CPU microcodes.
+
+We will focus on 2nd, 4th, 5th modules.
+
+2 is not a Fixed module, indeed it does not have 2nd bit (0x04) set in Attributes. Data checksum is already initialized to the default value 0xAA.
+So we have to change Attributes value from 08 to 00.
+
+As always, open MMTool and load the BIOS image. "Extract" tab, Volume: 02:01-00 Index: 02, give a name such as "02.ffs". Extract as is, Extract.
+Do not close MMTool for now.
+Open the file with Hextor; Go To address... > 0x13; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x-0x08 > OK
+Now we need to calculate the new "Header checksum". As always, we removed -0x08. Now we need to add +0x08 to that checksum value.
+Go To address... > 0x10; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x+0x08 > OK
+
+Save the file to something like "02_correct_Attributes_08_00.ffs"
+Close Hextor.
+
+
+
+4 is not a Fixed module, indeed it does not have 2nd bit (0x04) set in Attributes. Data checksum is already initialized to the default value 0xAA, but this time we have 5th bit set (0x20) which is non valid per UEFI Platform Initialization Specification. Let's fix this issue!
+So we have to change Attributes value from 28 to 00.
+
+Back to MMTool, select Volume: 03 Index: 0B, give a name such as "0B.ffs". Extract as is, Extract.
+Open the file with Hextor; Go To address... > 0x13; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x-0x28 > OK
+Now we need to calculate the new "Header checksum". As always, we removed -0x28. Now we need to add +0x28 to that checksum value.
+Go To address... > 0x10; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x+0x28 > OK
+
+Save the file to something like "0B_correct_Attributes_28_00.ffs"
+Close Hextor.
+
+
+
+5 is not a Fixed module, indeed it does not have 2nd bit (0x04) set in Attributes. Data checksum is already initialized to the default value 0xAA, but this time we have 5th bit set (0x20) which is non valid per UEFI Platform Initialization Specification. Let's fix this issue!
+We have to change again Attributes value from 28 to 00.
+
+Again, back to MMTool, select Volume: 03 Index: 32, give a name such as "32.ffs". Extract as is, Extract.
+Open the file with Hextor; Go To address... > 0x13; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x-0x28 > OK
+Now we need to calculate the new "Header checksum". As always, we removed -0x28. Now we need to add +0x28 to that checksum value.
+Go To address... > 0x10; Edit > Select Range... > Range end: +1; Operations > Modify with expression > x+0x28 > OK
+
+Save the file to something like "32_correct_Attributes_28_00.ffs"
+Close Hextor.
+Close MMTool.
+
+
+Now, there is 1 more "Padding file" to remove which is not listed in UEFITool "Parser" tab. But we will modify this part at the very end of the process!!
+
+
+
+[Adding HfsPlus module] part. Since I'm going to install a hackintosh I need to include the binary HfsPlus from acidanthera/OcBinaryData repository in the EFI folder. As vit9696 explains here (https://github.com/acidanthera/bugtracker/issues/659#issue-548918983)
+
+"Currently we recommend using Apple HfsPlus.efi driver to enable HFS+ file system support for the following tasks:
+
+- Loading DMG recovery images in all operating systems up to 10.15 inclusive.
+- Loading macOS on HFS+ up to 10.13 inclusive (I believe there is no legit way to install macOS on HFS+ otherwise).
+- Loading macOS installers up to 10.14 or even 10.15 inclusive (they still use HFS+)."
+
+
+
+So this driver is still needed, despite Apple is using APFS since macOS 10.14+.
+
+I was fed up to include this driver in every EFI partition (wheter it is a USB or a hard drive partition), so I decided to add this driver directly in the firmware!
+This also avoids me to enable UEFI > ConnectDrivers in OpenCore config.
+
+Back to CMD;
+First, create the PE32 image section:
+> GenSec --outputfile HfsPlus_PE32.sec --sectiontype EFI_SECTION_PE32 --verbose HfsPlus.efi
+Then, create the UI section:
+> GenSec --outputfile HfsPlus_UI.sec --sectiontype EFI_SECTION_USER_INTERFACE --name "HfsPlus"
+Then, create a "Compressed section" with algorithm None:
+> GenSec --outputfile HfsPlus_Compressed_None.sec --sectiontype EFI_SECTION_COMPRESSION --compress PI_NONE --verbose HfsPlus_PE32.sec HfsPlus_UI.sec
+
+Lastly, create the .ffs module using this specific GUID: "AE4C11C8-1D6C-F24E-A183-E1CA36D1A8A9"
+This GUID is used by Apple in the latest Intel Mac firmwares.
+This is the direct link to find this GUID: https://github.com/LongSoft/UEFITool/blob/A68/common/guids.csv#L7224C1-L7224C37
+Otherwise it's included in the EFIPayloads of the official installer.
+
+> GenFfs --outputfile HfsPlus.ffs --filetype EFI_FV_FILETYPE_DRIVER --fileguid "AE4C11C8-1D6C-F24E-A183-E1CA36D1A8A9" --checksum --sectionfile HfsPlus_Compressed_None.sec --verbose
+
+Done, with the creation of the HfsPlus ffs module!
+
+
+
+
+
+Now we have our mod .ffs files to be replaced/insert into our original file.
+Open MMTool, load "Z97XSLI_my_MAC_address_74D435E6422C_NVRAM_ACPI_Debug.fd" BIOS file.
+Here is a table to better understand how to proceed next in MMTool:
+
+Order of operations | Action inside MMTool | Volume Index | File Index |   FileName   | filesystem filename
+         01         |       Replace        |      01      |     01     |              | "Updated_CPU_Microcodes.ffs" (1/2)
+         02         |       Replace        |      01      |     04     |    Setup     | "04-Setup_Asis_Tiano_ACPI_Debug.ffs"
+         03         |       Replace        |   02:01-00   |     02     |              | "02_correct_Attributes_08_00.ffs"
+         04         |       Replace        |   02:01-00   |     07     |              | "07_ACPI_Debug.ffs"
+         05         |       Replace        |   02:01-00   |     0C     | AmiBoardInfo | "0C-AmiBoardInfo_DSDT_mod.ffs"
+         06         |       Replace        |   02:01-00   |     81     |    AMITSE    | "81-AMITSE_ACPI_Debug.ffs"
+         07         |     Insert As is     |   02:01-00   |            |              | "HfsPlus.ffs"
+         08         |      Replace         |      03      |     02     |              | "Updated_CPU_Microcodes.ffs" (2/2)
+         09         |      Replace         |      03      |     0B     |              | "0B_correct_Attributes_28_00.ffs"
+         10         |      Replace         |      03      |     32     |              | "32_correct_Attributes_28_00.ffs"
+
+"Save Image as.." => "def" => Save. Close.
+
+Back in CMD, run:
+> del Z97XSLI_my_MAC_address_74D435E6422C_NVRAM_ACPI_Debug.fd
+
+Now, open the "def.fd" file in UEFITool.
+Expand "Intel image", "BIOS region", last "EfiFirmwareFileSystem2Guid". Last module is "SecCore_VolumeTopFile"; this module does not have alignment issues and is NOT "Fixed". Up arrow key "Padding file".
+
+What we are going to do here is delete the entire "Padding file" and add the exact same size of it at the end of the next module containing "\xFF" bytes; it will be listed as "Volume free space" after the edit.
+
+So, take notes on the right of the following items:
+- Base: 7F6960h
+- Full size: 8820h (34848)
+
+Open "def.fd" in Hextor, Go To address... > 0x7F6960 (Base offset)
+Edit > Select Range... > Range end: +34848 (Full size)
+Hit "Insert" key on the keyboard to switch to insert mode, then "Del" key to delete the selection. Hit "Insert" key again to switch back to overwrite mode.
+Go to the end of the BIOS file using Ctrl+End shortcut. Operations > Insert bytes / Fill selection > Hex pattern: FF > Count: 34848 > OK.
+
+Save the BIOS file as "Z97XSLI.fd".
+Close Hextor.
+
+Back to UEFITool; File > Open image file in new window... > "Z97XSLI.fd" > OK
+
+Again, expand "Intel image" > "BIOS region" > last "EfiFirmwareFileSystem2Guid" > scroll till end. You will see "Volume free space"! Select it and check that "Full size" is the same as "Padding file"'s Full size in "def.fd"
+
+Back in CMD, run:
+> del def.fd
+
+Done!!!!!!!
+
+So now, in our Documents folder, we have our initial OEM BIOS file called Z97XSLI.10b and our latest mod BIOS file called Z97XSLI.fd
