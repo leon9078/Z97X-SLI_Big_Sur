@@ -194,7 +194,7 @@ Expand "Replace" section; Replace with: EH0 > Replace all. Search pattern replac
 Close Find/Replace window.
 
 
-I also want to increare the "OEM Revision" of the DSDT table. That's because I'm actually making an edit that creates a diff to the original DSDT.
+I also want to increase the "OEM Revision" of the DSDT table. That's because I'm actually making an edit that creates a diff to the original DSDT.
 As we can see in ACPI spec (https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#differentiated-system-description-table-dsdt), "OEM Revision" is at offset 24 from the beginning of the DSDT table and is 4 bytes length.
 
 
@@ -773,9 +773,6 @@ Close Hextor.
 Close MMTool.
 
 
-Now, there is 1 more "Padding file" to remove which is not listed in UEFITool "Parser" tab. But we will modify this part at the very end of the process!!
-
-
 
 [Adding HfsPlus module] part. Since I'm going to install a hackintosh I need to include the binary HfsPlus from acidanthera/OcBinaryData repository in the EFI folder. As vit9696 explains here (https://github.com/acidanthera/bugtracker/issues/659#issue-548918983)
 
@@ -829,34 +826,13 @@ Order of operations | Action inside MMTool | Volume Index | File Index |   FileN
          09         |      Replace         |      03      |     0B     |              | "0B_correct_Attributes_28_00.ffs"
          10         |      Replace         |      03      |     32     |              | "32_correct_Attributes_28_00.ffs"
 
-"Save Image as.." => "def" => Save. Close.
+"Save Image as.." => "Z97XSLI" => Save. Close.
 
 Back in CMD, run:
 > del Z97XSLI_my_MAC_address_74D435E6422C_NVRAM_ACPI_Debug.fd
+> exit
 
-Now, open the "def.fd" file in UEFITool.
-Expand "Intel image", "BIOS region", last "EfiFirmwareFileSystem2Guid". Last module is "SecCore_VolumeTopFile"; this module does not have alignment issues and is NOT "Fixed". Up arrow key "Padding file".
 
-What we are going to do here is delete the entire "Padding file" and add the exact same size of it at the end of the next module containing "\xFF" bytes; it will be listed as "Volume free space" after the edit.
-
-So, take notes on the right of the following items:
-- Base: 7F6960h
-- Full size: 8820h (34848)
-
-Open "def.fd" in Hextor, Go To address... > 0x7F6960 (Base offset)
-Edit > Select Range... > Range end: +34848 (Full size)
-Hit "Insert" key on the keyboard to switch to insert mode, then "Del" key to delete the selection. Hit "Insert" key again to switch back to overwrite mode.
-Go to the end of the BIOS file using Ctrl+End shortcut. Operations > Insert bytes / Fill selection > Hex pattern: FF > Count: 34848 > OK.
-
-Save the BIOS file as "Z97XSLI.fd".
-Close Hextor.
-
-Back to UEFITool; File > Open image file in new window... > "Z97XSLI.fd" > OK
-
-Again, expand "Intel image" > "BIOS region" > last "EfiFirmwareFileSystem2Guid" > scroll till end. You will see "Volume free space"! Select it and check that "Full size" is the same as "Padding file"'s Full size in "def.fd"
-
-Back in CMD, run:
-> del def.fd
 
 Done!!!!!!!
 

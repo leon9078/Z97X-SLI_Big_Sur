@@ -1,5 +1,5 @@
       Type       |        Subtype        |   Base   |   Size   |  CRC32   |   Name 
- Image           | Intel                 | 00000000 | 00800000 | CD997DE4 |  Intel image
+ Image           | Intel                 | 00000000 | 00800000 | E37D2C7A |  Intel image
  Region          | Descriptor            | 00000000 | 00001000 | C74E4AE1 | - Descriptor region
  Region          | GbE                   | 00001000 | 00002000 | 926D1DDC | - GbE region
  Region          | ME                    | 00003000 | 001FD000 | F14679A9 | - ME region
@@ -35,7 +35,7 @@
  FPT partition   | Code                  | 000D2000 | 00077000 | F7FAC1F8 | -- NFTP
  FPT partition   | Code                  | 00149000 | 00037000 | A2044957 | -- MDMV
  Padding         | Empty (0xFF)          | 00180000 | 00080000 | 504BF849 | -- Padding
- Region          | BIOS                  | 00200000 | 00600000 | 9D5CCB70 | - BIOS region
+ Region          | BIOS                  | 00200000 | 00600000 | B3B89AEE | - BIOS region
  Volume          | FFSv2                 | 00200000 | 00020000 | B2F1B506 | -- EfiFirmwareFileSystem2Guid
  File            | Raw                   | 00200048 | 0001FFB8 | 38493587 | --- NVRAM | NVAR store
  NVAR entry      | Full                  | 00200060 | 0000091B | 17943999 | ---- AmiStandardDefaultsVariable | StdDefaults
@@ -977,7 +977,7 @@
  Section         | PE32 image            | 0066C748 | 000020C4 | 7156B244 | ---- PE32 image section
  Section         | UI                    | 0066E80C | 00000018 | 83BC0090 | ---- UI section
  Free space      |                       | 0066E828 | 000917D8 | 6CA8AB06 | --- Volume free space
- Volume          | FFSv2                 | 00700000 | 00100000 | B4799E81 | -- EfiFirmwareFileSystem2Guid
+ Volume          | FFSv2                 | 00700000 | 00100000 | 9A9DCF1F | -- EfiFirmwareFileSystem2Guid
  File            | PEI module            | 00700048 | 00001B1A | 41142045 | --- TxtPei | TxtPei
  Section         | PEI dependency        | 00700060 | 0000004C | 994747FC | ---- PEI dependency section
  Section         | PE32 image            | 007000AC | 00001AA4 | 2BA9130A | ---- PE32 image section
@@ -1167,7 +1167,7 @@
  File            | Freeform              | 007F6790 | 000000A4 | B5ABD27C | --- Fid
  Section         | Freeform subtype GUID | 007F67A8 | 0000008C | 6B093C8E | ---- SignOn
  File            | Raw                   | 007F6838 | 00000128 | 79E3C941 | --- TxtPeiAp
- File            | SEC core              | 007F6960 | 00000E80 | 5A358DA5 | --- SecCore_VolumeTopFile | Volume Top File
- Section         | PE32 image            | 007F6978 | 00000E24 | BE9ADC2C | ---- PE32 image section
- Section         | Raw                   | 007F779C | 00000044 | 418C52C5 | ---- Raw section
- Free space      |                       | 007F77E0 | 00008820 | 19697321 | --- Volume free space
+ File            | Pad                   | 007F6960 | 00008820 | 691F64D8 | --- Padding file
+ File            | SEC core              | 007FF180 | 00000E80 | 5A358DA5 | --- SecCore_VolumeTopFile | Volume Top File
+ Section         | PE32 image            | 007FF198 | 00000E24 | BE9ADC2C | ---- PE32 image section
+ Section         | Raw                   | 007FFFBC | 00000044 | 418C52C5 | ---- Raw section
