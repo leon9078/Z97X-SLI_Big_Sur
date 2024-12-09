@@ -1,0 +1,110 @@
+
+Intel ACPI Component Architecture
+ASL Optimizing Compiler version 20120711-32 [Jul 11 2012]
+Copyright (c) 2000 - 2012 Intel Corporation
+
+Compilation of "SSDT-USBW.dsl" - Mon Dec 09 17:26:09 2024
+
+       1....
+       2....
+       3....
+       4....
+       5....
+       6....
+       7....
+       8....
+       9....
+      10....
+      11....
+      12....
+      13....
+      14....
+      15....
+      16....
+      17....
+      18....
+      19....
+      20....DefinitionBlock ("SSDT-USBW.aml", "SSDT", 2, "OSY86", "USBW", 0x00000000)
+
+00000000....53 53 44 54 76 00 00 00     "SSDTv..."
+00000008....02 88 4F 53 59 38 36 00     "..OSY86."
+00000010....55 53 42 57 00 00 00 00     "USBW...."
+00000018....00 00 00 00 49 4E 54 4C     "....INTL"
+00000020....11 07 12 20 ............    "... "
+
+      21....{
+      22....    Scope (\_SB)
+
+00000024....10 41 05 5C 5F 53 42 5F     ".A.\_SB_"
+
+      23....    {
+      24....        Device (USBW)
+
+0000002C....5B 82 48 04 55 53 42 57     "[.H.USBW"
+
+      25....        {
+      26....            Name (_HID, "PNP0D10")  
+
+00000034....08 5F 48 49 44 0D 50 4E     "._HID.PN"
+0000003C....50 30 44 31 30 00 ......    "P0D10."
+
+      27....            Name (_UID, "WAKE")  
+
+00000042....08 5F 55 49 44 0D 57 41     "._UID.WA"
+0000004A....4B 45 00 ...............    "KE."
+
+      28....            Method (_STA, 0, NotSerialized)  
+
+0000004D....14 19 5F 53 54 41 00 ...    ".._STA."
+
+      29....            {
+      30....                If (_OSI ("Darwin"))
+
+00000054....A0 10 ..................    ".."
+00000056....5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+0000005E....77 69 6E 00 ............    "win."
+
+      31....                {
+      32....                    Return (0x0F)
+
+00000062....A4 0A 0F ...............    "..."
+
+      33....                }
+      34....
+      35....                Return (Zero)
+
+00000065....A4 00 ..................    ".."
+
+      36....            }
+      37....
+      38....            Method (_PRW, 0, NotSerialized)  
+
+00000067....14 0E 5F 50 52 57 00 ...    ".._PRW."
+
+      39....            {
+      40....                Return (Package (0x02)
+
+0000006E....A4 .....................    "."
+0000006F....12 06 02 0A 0D 0A 04 ...    "......."
+      41....                {
+      42....                    0x0D, 
+      43....                    0x04
+      44....                })
+      45....            }
+      46....        }
+      47....    }
+      48....}
+      49....
+
+
+Summary of errors and warnings
+
+
+ASL Optimizing Compiler version 20120711-32 [Jul 11 2012]
+
+ASL Input:     SSDT-USBW.dsl - 50 lines, 633 bytes, 10 keywords
+AML Output:    SSDT-USBW.aml - 118 bytes, 6 named objects, 4 executable opcodes
+Listing File:  SSDT-USBW.lst - 2783 bytes
+
+Compilation complete. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+
