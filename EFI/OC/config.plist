@@ -24,7 +24,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Specify an ACPI name for DRAM Controller</string>
+				<string>Set an ACPI name for DRAM Controller</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
@@ -48,7 +48,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Prevent double keypress to wake the monitor and darkwakes</string>
+				<string>Avoid a second keyboard press or some other wake event to power up the monitor. Also, prevent DarkWake ... due to XHC</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
@@ -64,7 +64,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>XHCI USB Map alternative</string>
+				<string>XHCI USB map</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
@@ -620,7 +620,7 @@
 				<key>BundlePath</key>
 				<string>USBWakeFixup.kext</string>
 				<key>Comment</key>
-				<string>Prevent double keypress to wake the monitor and darkwakes</string>
+				<string>Avoid a second keyboard press or some other wake event to power up the monitor. Also, prevent DarkWake ... due to XHC</string>
 				<key>Enabled</key>
 				<true/>
 				<key>ExecutablePath</key>
@@ -915,7 +915,7 @@
 				<key>SystemAudioVolume</key>
 				<data>Rg==</data>
 				<key>boot-args</key>
-				<string>-v keepsyms=1</string>
+				<string>-v</string>
 				<key>csr-active-config</key>
 				<data>AAAAAA==</data>
 				<key>prev-lang:kbd</key>
@@ -925,6 +925,8 @@
 			</dict>
 			<key>E09B9297-7928-4440-9AAB-D1F8536FBF0A</key>
 			<dict>
+				<key>hbfx-ahbm</key>
+				<integer>193</integer>
 				<key>hbfx-patch-pci</key>
 				<string>XHC</string>
 			</dict>
@@ -945,6 +947,7 @@
 			</array>
 			<key>E09B9297-7928-4440-9AAB-D1F8536FBF0A</key>
 			<array>
+				<string>hbfx-ahbm</string>
 				<string>hbfx-patch-pci</string>
 			</array>
 		</dict>

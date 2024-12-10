@@ -1,12 +1,7 @@
 # Z97X-SLI_Big_Sur
 hackintosh stuff
 
-Pre requirement: Update to the latest beta BIOS (F10b), because it has this important bug fix: "Fix memory compatibility"
-
-The provided .img/.vhd image files have the following edits, done by me using UEFITool software:
-
-1. Updated the CPU microcode version to the latest revision: 0x28
-2. Updated Intel GbE region with the my specific MAC Address
+Pre requirement: Update the BIOS with my custom modifications "Z97XSLI.fd". Find the guide in Final_guide.txt
 
 BIOS settings:
 
@@ -25,16 +20,6 @@ BIOS settings:
 - Parallel Port: Disabled
 - Intel(R) Ethernet Network Connection i217-V => NIC Configuration => Wake on LAN: Disabled
 - Wake on LAN: Disabled
-- RC6(Render Standby): Disabled
-
-To flash the FPT bootable file
-
-In macOS/Linux
-
-1. sudo cp "path/to/Z97XSLI.img" /dev/sdX
-2. sudo sync
-
-In Windows flash it with Rufus, select Z97XSLI.vhd file
 
 Post install:
 
@@ -45,17 +30,17 @@ Insert Arch Linux USB installer, boot from it F12 key
 - mount /dev/sdX1 /mnt
 - nano -c /mnt/EFI/OC/config.plist
 
-1. Replace Misc > Boot > "LauncherOption" value from "Disabled" to "Full"
-2. Replace Misc > Security > "ScanPolicy" value  from "0" to "65795"
-3. Disable Misc > Tools > [0] (OpenShell)
-4. Disable UEFI > Drivers > [1] (ResetNvramEntry)
+1. Misc > Boot > "LauncherOption" > "Disabled" => "Full"
+2. Misc > Security > "ScanPolicy" > 0 => 65795
+3. Misc > Tools > [0] (OpenShell) > Enabled > YES => NO
+4. UEFI > Drivers > [1] (ResetNvramEntry) > Enabled > YES => NO
 
 Save (Ctrl+O), then exit (Ctrl+X)
 - sync
 - umount /mnt
 - systemctl reboot
 
-Unplug the Arch installer USB drive, boot to OpenCore, but at the menu press TAB key twice to select Reboot
+Unplug the Arch installer USB drive, boot to OpenCore, but at the menu press TAB key twice to select Restart
 
 Reinsert to Arch USB drive, now F12 key > boot back to the Arch USB
 
@@ -69,22 +54,31 @@ You should have three entries:
 
 What we need to do is manually change the order of those entries to have OpenCore first, then UEFI OS:
 
-- efibootmgr -O #Delete Boot Order
+- efibootmgr -O
 - cp /sys/firmware/efi/efivars/Boot000{1,4}-8be4df61-93ca-11d2-aa0d-00e098032b8c
-- efibootmgr #Verify duplicate entry has been added
-- efibootmgr -Bb 0001
+- efibootmgr
+- efibootmgr -Bb 1
 - cp /sys/firmware/efi/efivars/Boot000{2,1}-8be4df61-93ca-11d2-aa0d-00e098032b8c
 - efibootmgr
-- efibootmgr -Bb 0002
+- efibootmgr -Bb 2
 - cp /sys/firmware/efi/efivars/Boot000{4,2}-8be4df61-93ca-11d2-aa0d-00e098032b8c
 - efibootmgr
-- efibootmgr -Bb 0004
-- efibootmgr -Bb 0003
-- efibootmgr -o 0001,0002
+- for x in 4 3; do echo && efibootmgr -Bb $x; done && echo
+- efibootmgr -o 1,2
 - efibootmgr -t 0
+
+Update the CMOS system clock
+
+- hwclock -r
+
+Connect to internet, then issue the same command multiple times until the system clock updates to the current date.
+
+- hwclock -r
+
+Reboot
 - systemctl reboot
 
-Unplug Arch Linux USB installer drive, done. Enojy your new hackintosh
+Unplug Arch Linux USB installer drive, done. Enojy your new hackintosh!
 
 
 
