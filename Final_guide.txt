@@ -68,8 +68,7 @@ Close both Notepad windows.
 Back in CMD, run:
 > Editor.bat
 > Updater.bat
-> del Editor.bat
-> del Updater.bat
+> del Editor.bat Updater.bat
 
 Run the executables to install the programs but DO NOT open them.
 
@@ -280,9 +279,9 @@ So we have to calculate also the FFS Data checksum. As with the DSDT table check
 The data checksum value is located inside ffs file header at offset 11h
 (https://uefi.org/specs/PI/1.8A/V3_Code_Definitions.html#efi-ffs-file-header) => Prototype
    - EFI_GUID                  0x00 - 0x0F (16 bytes)
-   - EFI_FFS_INTEGRITY_CHECK   
+   - EFI_FFS_INTEGRITY_CHECK
       - Header                 0x10        (1 byte)
-	  - File                   0x11        (1 byte)
+      - File                   0x11        (1 byte)
 
 In Hextor; Search > Go To address... > 0x11. Value is 0x25
 Now there are 22 bytes changed:
@@ -371,13 +370,13 @@ FFS
    - Body
    0h section
       - Header
-	  - Body
+      - Body
    1h section
       - Header
-	  - Body
+      - Body
    2h section
       - Header
-	  - Body
+      - Body
    [...]
 
 
@@ -428,10 +427,10 @@ Now we need to search for something descriptive inside those *.txt files.
 We can use Notepad++ "Find in Files..." feature to search some text in multiple files at once. Select the full directory path, uncheck "Match case", search mode "normal"
 Search for something descriptive like "mdbg", "adbg" or "debug". We found 1 result in 1 text file!
 
-0x337726: 		OneOf Prompt: "ACPI Debug", Help: "Open a memory buffer for storing debug strings.Use method ADBG to write strings to buffer.", QuestionFlags: 0x10, QuestionId: 0x318, VarStoreId: 0x1, VarOffset: 0x6EA, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x0, Step: 0x0 { 05 A6 1C 0F 1D 0F 18 03 01 00 EA 06 10 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 }
-0x33774C: 			OneOfOption Option: "Disabled" Value: 0, Default, MfgDefault { 09 0E 04 00 30 00 00 00 00 00 00 00 00 00 }
-0x33775A: 			OneOfOption Option: "Enabled" Value: 1 { 09 0E 03 00 00 00 01 00 00 00 00 00 00 00 }
-0x337768: 		End  { 29 02 }
+0x337726:            OneOf Prompt: "ACPI Debug", Help: "Open a memory buffer for storing debug strings.Use method ADBG to write strings to buffer.", QuestionFlags: 0x10, QuestionId: 0x318, VarStoreId: 0x1, VarOffset: 0x6EA, Flags: 0x10, Size: 8, Min: 0x0, Max: 0x0, Step: 0x0 { 05 A6 1C 0F 1D 0F 18 03 01 00 EA 06 10 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 }
+0x33774C:                OneOfOption Option: "Disabled" Value: 0, Default, MfgDefault { 09 0E 04 00 30 00 00 00 00 00 00 00 00 00 }
+0x33775A:                OneOfOption Option: "Enabled" Value: 1 { 09 0E 03 00 00 00 01 00 00 00 00 00 00 00 }
+0x337768:            End  { 29 02 }
 
 So this is a hidden BIOS setting that will enable that SSDT in the ACPI stack and remove the DSDT decompile error!
 
@@ -665,7 +664,7 @@ In UEFI Platform Initialization Specification (https://uefi.org/specs/PI/1.8A/V3
    - EFI_GUID                  0x00 - 0x0F (16 bytes)
    - EFI_FFS_INTEGRITY_CHECK   
       - Header                 0x10        (1 byte)
-	  - File                   0x11        (1 byte)
+      - File                   0x11        (1 byte)
    - EFI_FV_FILETYPE           0x12        (1 byte)
    - EFI_FFS_FILE_ATTRIBUTES   0x13        (1 byte)
    [...]
@@ -822,9 +821,9 @@ Order of operations | Action inside MMTool | Volume Index | File Index |   FileN
          05         |       Replace        |   02:01-00   |     0C     | AmiBoardInfo | "0C-AmiBoardInfo_DSDT_mod.ffs"
          06         |       Replace        |   02:01-00   |     81     |    AMITSE    | "81-AMITSE_ACPI_Debug.ffs"
          07         |     Insert As is     |   02:01-00   |            |              | "HfsPlus.ffs"
-         08         |      Replace         |      03      |     02     |              | "Updated_CPU_Microcodes.ffs" (2/2)
-         09         |      Replace         |      03      |     0B     |              | "0B_correct_Attributes_28_00.ffs"
-         10         |      Replace         |      03      |     32     |              | "32_correct_Attributes_28_00.ffs"
+         08         |       Replace        |      03      |     02     |              | "Updated_CPU_Microcodes.ffs" (2/2)
+         09         |       Replace        |      03      |     0B     |              | "0B_correct_Attributes_28_00.ffs"
+         10         |       Replace        |      03      |     32     |              | "32_correct_Attributes_28_00.ffs"
 
 "Save Image as.." => "Z97XSLI" => Save. Close.
 
@@ -832,8 +831,15 @@ Back in CMD, run:
 > del Z97XSLI_my_MAC_address_74D435E6422C_NVRAM_ACPI_Debug.fd
 > exit
 
+We have finished editing the BIOS. The last step is to create the report of it.
+Open UEFITool for the last time and load "Z97XSLI.fd"; File > Generate report... > Save. Close UEFITool.
+Open MMTool for the last time and load "Z97XSLI.fd"; "Create Report" > OK. Close MMTool.
+
+We now have 3 files:
+1) Z97XSLI.fd (edited BIOS file)
+2) Z97XSLI.fd.report.txt (UEFITool report)
+3) Z97XSLI.rpt (MMTool report)
+
 
 
 Done!!!!!!!
-
-So now, in our Documents folder, we have our initial OEM BIOS file called Z97XSLI.10b and our latest mod BIOS file called Z97XSLI.fd
