@@ -48,7 +48,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Avoid a second keyboard press or some other wake event to power up the monitor. Also, prevent DarkWake ... due to XHC</string>
+				<string>Avoid a second keyboard press or some other wake event to power up the monitor. Also, prevent DarkWake ... due to XHC0</string>
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
@@ -60,7 +60,7 @@
 				<key>Enabled</key>
 				<true/>
 				<key>Path</key>
-				<string>SSDT-XHCfixes.aml</string>
+				<string>SSDT-XHCI_fix.aml</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -197,11 +197,11 @@
 			</dict>
 			<dict>
 				<key>Base</key>
-				<string>\_SB.PCI0.XHC_.XSEL</string>
+				<string>\_SB.PCI0.XHC0.XSEL</string>
 				<key>BaseSkip</key>
 				<integer>0</integer>
 				<key>Comment</key>
-				<string>XHC Method XSEL to XSEX</string>
+				<string>XHC0 Method XSEL to XSEX</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -227,11 +227,11 @@
 			</dict>
 			<dict>
 				<key>Base</key>
-				<string>\_SB.PCI0.XHC_.ESEL</string>
+				<string>\_SB.PCI0.XHC0.ESEL</string>
 				<key>BaseSkip</key>
 				<integer>0</integer>
 				<key>Comment</key>
-				<string>XHC Method ESEL to ESEX</string>
+				<string>XHC0 Method ESEL to ESEX</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -257,11 +257,11 @@
 			</dict>
 			<dict>
 				<key>Base</key>
-				<string>\_SB.PCI0.XHC_.XWAK</string>
+				<string>\_SB.PCI0.XHC0.XWAK</string>
 				<key>BaseSkip</key>
 				<integer>0</integer>
 				<key>Comment</key>
-				<string>XHC Method XWAK to XWAX</string>
+				<string>XHC0 Method XWAK to XWAX</string>
 				<key>Count</key>
 				<integer>1</integer>
 				<key>Enabled</key>
@@ -620,7 +620,7 @@
 				<key>BundlePath</key>
 				<string>USBWakeFixup.kext</string>
 				<key>Comment</key>
-				<string>Avoid a second keyboard press or some other wake event to power up the monitor. Also, prevent DarkWake ... due to XHC</string>
+				<string>Avoid a second keyboard press or some other wake event to power up the monitor. Also, prevent DarkWake ... due to XHC0</string>
 				<key>Enabled</key>
 				<true/>
 				<key>ExecutablePath</key>
@@ -928,7 +928,7 @@
 				<key>hbfx-ahbm</key>
 				<integer>193</integer>
 				<key>hbfx-patch-pci</key>
-				<string>XHC</string>
+				<string>XHC0</string>
 			</dict>
 		</dict>
 		<key>Delete</key>
