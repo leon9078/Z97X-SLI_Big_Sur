@@ -1,0 +1,117 @@
+
+Intel ACPI Component Architecture
+ASL Optimizing Compiler version 20120711-32 [Jul 11 2012]
+Copyright (c) 2000 - 2012 Intel Corporation
+
+Compilation of "SSDT-XHCI_fix.dsl" - Mon Dec 30 11:07:22 2024
+
+       1....DefinitionBlock ("", "SSDT", 2, "HACK", "XHCI_fix", 0x00000000)
+
+00000000....53 53 44 54 8D 00 00 00     "SSDT...."
+00000008....02 2B 48 41 43 4B 00 00     ".+HACK.."
+00000010....58 48 43 49 5F 66 69 78     "XHCI_fix"
+00000018....00 00 00 00 49 4E 54 4C     "....INTL"
+00000020....11 07 12 20 ............    "... "
+
+       2....{
+       3....    External (\_SB_.PCI0.XHC0, DeviceObj)
+       4....    External (\_SB_.PCI0.XHC0.ESEX, MethodObj)    
+       5....    External (\_SB_.PCI0.XHC0.XSEX, MethodObj)    
+       6....    External (\_SB_.PCI0.XHC0.XWAX, MethodObj)    
+       7....
+       8....    Scope (\_SB.PCI0.XHC0)
+
+00000024....10 48 06 5C 2F 03 5F 53     ".H.\/._S"
+0000002C....42 5F 50 43 49 30 58 48     "B_PCI0XH"
+00000034....43 30 ..................    "C0"
+
+       9....    {
+      10....        Method (XSEL, 0, Serialized)
+
+00000036....14 1C 58 53 45 4C 08 ...    "..XSEL."
+
+      11....        {
+      12....            If (_OSI ("Darwin"))
+
+0000003D....A0 0F ..................    ".."
+0000003F....5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+00000047....77 69 6E 00 ............    "win."
+
+      13....            {
+      14....                Return (Zero)
+
+0000004B....A4 00 ..................    ".."
+
+      15....            }
+      16....
+      17....            Return (^XSEX ())
+
+0000004D....A4 .....................    "."
+0000004E....5E 58 53 45 58 .........    "^XSEX"
+
+      18....        }
+      19....
+      20....        Method (ESEL, 0, Serialized)
+
+00000053....14 1C 45 53 45 4C 08 ...    "..ESEL."
+
+      21....        {
+      22....            If (_OSI ("Darwin"))
+
+0000005A....A0 0F ..................    ".."
+0000005C....5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+00000064....77 69 6E 00 ............    "win."
+
+      23....            {
+      24....                Return (Zero)
+
+00000068....A4 00 ..................    ".."
+
+      25....            }
+      26....
+      27....            Return (^ESEX ())
+
+0000006A....A4 .....................    "."
+0000006B....5E 45 53 45 58 .........    "^ESEX"
+
+      28....        }
+      29....
+      30....        Method (XWAK, 0, Serialized)
+
+00000070....14 1C 58 57 41 4B 08 ...    "..XWAK."
+
+      31....        {
+      32....            If (_OSI ("Darwin"))
+
+00000077....A0 0F ..................    ".."
+00000079....5F 4F 53 49 0D 44 61 72     "_OSI.Dar"
+00000081....77 69 6E 00 ............    "win."
+
+      33....            {
+      34....                Return (Zero)
+
+00000085....A4 00 ..................    ".."
+
+      35....            }
+      36....
+      37....            Return (^XWAX ())
+
+00000087....A4 .....................    "."
+00000088....5E 58 57 41 58 .........    "^XWAX"
+      38....        }
+      39....    }
+      40....}
+      41....
+
+
+Summary of errors and warnings
+
+
+ASL Optimizing Compiler version 20120711-32 [Jul 11 2012]
+
+ASL Input:     SSDT-XHCI_fix.dsl - 42 lines, 836 bytes, 13 keywords
+AML Output:    SSDT-XHCI_fix.aml - 141 bytes, 4 named objects, 9 executable opcodes
+Listing File:  SSDT-XHCI_fix.lst - 3310 bytes
+
+Compilation complete. 0 Errors, 0 Warnings, 0 Remarks, 0 Optimizations
+

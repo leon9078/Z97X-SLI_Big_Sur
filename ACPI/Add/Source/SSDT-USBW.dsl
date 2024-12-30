@@ -1,5 +1,7 @@
-DefinitionBlock ("", "SSDT", 2, "OSY86", "USBW", 0x00000000)
+DefinitionBlock ("", "SSDT", 2, "HACK", "USBW", 0x00000000)
 {
+    External (\_SB_.PCI0.XHC0._PRW, MethodObj)    // 0 Arguments
+
     Scope (\_SB)
     {
         Device (USBW)
@@ -18,11 +20,7 @@ DefinitionBlock ("", "SSDT", 2, "OSY86", "USBW", 0x00000000)
 
             Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
             {
-                Return (Package (0x02)
-                {
-                    0x0D, 
-                    0x04
-                })
+                Return (\_SB.PCI0.XHC0._PRW ())
             }
         }
     }

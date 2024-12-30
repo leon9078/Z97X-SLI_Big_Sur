@@ -1,9 +1,9 @@
 DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
 {
-    External (\_SB_.PCI0.XHC_, DeviceObj)
-    External (\_SB_.PCI0.XHC_.RHUB, DeviceObj)
+    External (\_SB_.PCI0.XHC0, DeviceObj)
+    External (\_SB_.PCI0.XHC0.RHUB, DeviceObj)
 
-    Scope (\_SB.PCI0.XHC.RHUB)
+    Scope (\_SB.PCI0.XHC0.RHUB)
     {
         Method (_STA, 0, NotSerialized)  // _STA: Status
         {
@@ -16,123 +16,75 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
         }
     }
 
-    Scope (\_SB.PCI0.XHC)
+    Scope (\)
+    {
+        Name (UHSD, Package (0x0E)
+        {
+            Zero, 
+            Zero, 
+            One, 
+            One, 
+            One, 
+            One, 
+            One, 
+            One, 
+            One, 
+            One, 
+            One, 
+            Zero, 
+            One, 
+            One
+        })
+        Name (USSD, Package (0x06)
+        {
+            Zero, 
+            Zero, 
+            One, 
+            One, 
+            One, 
+            One
+        })
+        Method (GUPC, 2, Serialized)
+        {
+            Name (PCKG, Package (0x04)
+            {
+                Zero, 
+                Zero, 
+                Zero, 
+                Zero
+            })
+            Store (Arg0, Index (PCKG, Zero))
+            Store (Arg1, Index (PCKG, One))
+            Return (PCKG)
+        }
+
+        Method (GPLD, 2, Serialized)
+        {
+            Name (PCKG, Package (0x01)
+            {
+                Buffer (0x10) {}
+            })
+            CreateField (DerefOf (Index (PCKG, Zero)), Zero, 0x07, REV)
+            Store (0x02, REV)
+            CreateField (DerefOf (Index (PCKG, Zero)), 0x07, One, ICOL)
+            Store (One, ICOL)
+            CreateField (DerefOf (Index (PCKG, Zero)), 0x40, One, VISI)
+            Store (Arg0, VISI)
+            CreateField (DerefOf (Index (PCKG, Zero)), 0x43, 0x03, PANL)
+            Store (0x06, PANL)
+            CreateField (DerefOf (Index (PCKG, Zero)), 0x4A, 0x04, SHAP)
+            Store (0x07, SHAP)
+            CreateField (DerefOf (Index (PCKG, Zero)), 0x57, 0x08, GPOS)
+            Store (Arg1, GPOS)
+            Return (PCKG)
+        }
+    }
+
+    Scope (\_SB.PCI0.XHC0)
     {
         Device (XHUB)
         {
             Name (_ADR, Zero)  // _ADR: Address
-            Name (PLD1, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x01, 0xC6, 0x72, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x69, 0x0C, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD2, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x01, 0xC6, 0x72, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x69, 0x0C, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD3, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x01, 0xC6, 0x72, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x71, 0x0C, 0x80, 0x01, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD4, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x01, 0xC6, 0x72, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x71, 0x0C, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD5, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x71, 0x0C, 0x80, 0x02, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD6, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x69, 0x0C, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD7, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x71, 0x0C, 0x80, 0x03, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD8, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x71, 0x0C, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLD9, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x01, 0xC6, 0x72, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x71, 0x0C, 0x80, 0x04, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLDA, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x01, 0xC6, 0x72, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x71, 0x0C, 0x00, 0x05, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLDB, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x31, 0x1C, 0x80, 0x05, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLDC, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x31, 0x1C, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLDD, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x31, 0x1C, 0x80, 0x06, 0x00, 0x00, 0x00, 0x00
-                }
-            })
-            Name (PLDE, Package (0x01)
-            {
-                Buffer (0x10)
-                {
-                    /* 0000 */   0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    /* 0008 */   0x31, 0x1C, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00
-                }
-            })
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {
                 If (_OSI ("Darwin"))
@@ -143,31 +95,17 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Return (Zero)
             }
 
-            Method (GUPC, 2, Serialized)
-            {
-                Name (PCKG, Package (0x04)
-                {
-                    Zero, 
-                    Zero, 
-                    Zero, 
-                    Zero
-                })
-                Store (Arg0, Index (PCKG, Zero))
-                Store (Arg1, Index (PCKG, One))
-                Return (PCKG)
-            }
-
             Device (HS01)
             {
                 Name (_ADR, One)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (Zero, 0x03))
+                    Return (GUPC (DerefOf (Index (UHSD, Zero)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD1)
+                    Return (GPLD (DerefOf (Index (UHSD, Zero)), One))
                 }
             }
 
@@ -176,12 +114,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x02)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (Zero, 0x03))
+                    Return (GUPC (DerefOf (Index (UHSD, One)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD2)
+                    Return (GPLD (DerefOf (Index (UHSD, One)), 0x02))
                 }
             }
 
@@ -190,12 +128,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x03)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x02)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD3)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x02)), 0x03))
                 }
             }
 
@@ -204,12 +142,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x04)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x03)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD4)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x03)), 0x04))
                 }
             }
 
@@ -218,12 +156,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x05)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, Zero))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x04)), Zero))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD5)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x04)), 0x05))
                 }
             }
 
@@ -232,12 +170,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x06)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, Zero))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x05)), Zero))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD6)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x05)), 0x06))
                 }
             }
 
@@ -246,12 +184,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x07)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, Zero))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x06)), Zero))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD7)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x06)), 0x07))
                 }
             }
 
@@ -260,12 +198,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x08)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, Zero))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x07)), Zero))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD8)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x07)), 0x08))
                 }
             }
 
@@ -274,12 +212,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x09)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x08)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD9)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x08)), 0x09))
                 }
             }
 
@@ -288,12 +226,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x0A)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x09)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLDA)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x09)), 0x0A))
                 }
             }
 
@@ -302,12 +240,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x0B)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0xFF))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x0A)), 0xFF))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLDB)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x0A)), 0x0B))
                 }
             }
 
@@ -316,12 +254,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x0C)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (Zero, Zero))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x0B)), Zero))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLDC)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x0B)), 0x0C))
                 }
             }
 
@@ -330,12 +268,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x0D)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, Zero))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x0C)), Zero))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLDD)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x0C)), 0x0D))
                 }
             }
 
@@ -344,12 +282,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x0E)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, Zero))
+                    Return (GUPC (DerefOf (Index (UHSD, 0x0D)), Zero))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLDE)
+                    Return (GPLD (DerefOf (Index (UHSD, 0x0D)), 0x0E))
                 }
             }
 
@@ -358,12 +296,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x10)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (Zero, 0x03))
+                    Return (GUPC (DerefOf (Index (USSD, Zero)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD1)
+                    Return (GPLD (DerefOf (Index (USSD, Zero)), One))
                 }
             }
 
@@ -372,12 +310,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x11)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (Zero, 0x03))
+                    Return (GUPC (DerefOf (Index (USSD, One)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD2)
+                    Return (GPLD (DerefOf (Index (USSD, One)), 0x02))
                 }
             }
 
@@ -386,12 +324,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x12)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (USSD, 0x02)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD3)
+                    Return (GPLD (DerefOf (Index (USSD, 0x02)), 0x03))
                 }
             }
 
@@ -400,12 +338,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x13)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (USSD, 0x03)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD4)
+                    Return (GPLD (DerefOf (Index (USSD, 0x03)), 0x04))
                 }
             }
 
@@ -414,12 +352,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x14)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (USSD, 0x04)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLD9)
+                    Return (GPLD (DerefOf (Index (USSD, 0x04)), 0x05))
                 }
             }
 
@@ -428,12 +366,12 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "XHUB", 0x00000000)
                 Name (_ADR, 0x15)  // _ADR: Address
                 Method (_UPC, 0, Serialized)  // _UPC: USB Port Capabilities
                 {
-                    Return (GUPC (One, 0x03))
+                    Return (GUPC (DerefOf (Index (USSD, 0x05)), 0x03))
                 }
 
                 Method (_PLD, 0, Serialized)  // _PLD: Physical Device Location
                 {
-                    Return (PLDA)
+                    Return (GPLD (DerefOf (Index (USSD, 0x05)), 0x06))
                 }
             }
         }
