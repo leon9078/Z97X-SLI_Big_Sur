@@ -1,5 +1,5 @@
       Type       |        Subtype        |   Base   |   Size   |  CRC32   |   Name 
- Image           | Intel                 | 00000000 | 00800000 | E37D2C7A |  Intel image
+ Image           | Intel                 | 00000000 | 00800000 | C0A85E5B |  Intel image
  Region          | Descriptor            | 00000000 | 00001000 | C74E4AE1 | - Descriptor region
  Region          | GbE                   | 00001000 | 00002000 | 926D1DDC | - GbE region
  Region          | ME                    | 00003000 | 001FD000 | F14679A9 | - ME region
@@ -35,7 +35,7 @@
  FPT partition   | Code                  | 000D2000 | 00077000 | F7FAC1F8 | -- NFTP
  FPT partition   | Code                  | 00149000 | 00037000 | A2044957 | -- MDMV
  Padding         | Empty (0xFF)          | 00180000 | 00080000 | 504BF849 | -- Padding
- Region          | BIOS                  | 00200000 | 00600000 | B3B89AEE | - BIOS region
+ Region          | BIOS                  | 00200000 | 00600000 | 906DE8CF | - BIOS region
  Volume          | FFSv2                 | 00200000 | 00020000 | B2F1B506 | -- EfiFirmwareFileSystem2Guid
  File            | Raw                   | 00200048 | 0001FFB8 | 38493587 | --- NVRAM | NVAR store
  NVAR entry      | Full                  | 00200060 | 0000091B | 17943999 | ---- AmiStandardDefaultsVariable | StdDefaults
@@ -53,11 +53,11 @@
  Free space      |                       | 0020097B | 0001F675 | BF2214C0 | ---- Free space
  NVAR GUID store |                       | 0021FFF0 | 00000010 | 2F82779F | ---- GUID store
  Padding         | Empty (0xFF)          | 00220000 | 00030000 | 523F1D19 | -- Padding
- Volume          | FFSv2                 | 00250000 | 004B0000 | 62EA73AC | -- EfiFirmwareFileSystem2Guid
- File            | Volume image          | 00250048 | 002B1487 | FC3C414B | --- FV_MAIN_NESTED | FV_MAIN_NESTED
- Section         | Compressed            | 00250060 | 002B146F | 234E4636 | ---- Compressed section
- Section         | Volume image          |   N/A    | 00919004 | 8C12C369 | ----- Volume image section
- Volume          | FFSv2                 |   N/A    | 00919000 | 11B0663A | ------ EfiFirmwareFileSystem2Guid
+ Volume          | FFSv2                 | 00250000 | 004B0000 | 4B8F3F28 | -- EfiFirmwareFileSystem2Guid
+ File            | Volume image          | 00250048 | 002B14BD | 9216ACBF | --- FV_MAIN_NESTED | FV_MAIN_NESTED
+ Section         | Compressed            | 00250060 | 002B14A5 | B3F46169 | ---- Compressed section
+ Section         | Volume image          |   N/A    | 00919004 | 49C67F50 | ----- Volume image section
+ Volume          | FFSv2                 |   N/A    | 00919000 | D464DA03 | ------ EfiFirmwareFileSystem2Guid
  File            | DXE driver            |   N/A    | 00001295 | 001AEEDD | ------- IntelSaGopDriver | IntelSaGopDriver
  Section         | DXE dependency        |   N/A    | 00000028 | 5880F2EA | -------- DXE dependency section
  Section         | Compressed            |   N/A    | 00001255 | 9E365A87 | -------- Compressed section
@@ -121,10 +121,10 @@
  Section         | Compressed            |   N/A    | 0000DA61 | 767FFC42 | -------- Compressed section
  Section         | PE32 image            |   N/A    | 0000DA44 | 0AE22071 | --------- PE32 image section
  Section         | UI                    |   N/A    | 00000012 | 2761D55D | --------- UI section
- File            | DXE driver            |   N/A    | 00011CCF | 27194070 | ------- AmiBoardInfo | AmiBoardInfo
+ File            | DXE driver            |   N/A    | 00011CCF | 3C8EAD56 | ------- AmiBoardInfo | AmiBoardInfo
  Section         | DXE dependency        |   N/A    | 00000006 | 217A7023 | -------- DXE dependency section
- Section         | Compressed            |   N/A    | 00011CAF | 5DE675D5 | -------- Compressed section
- Section         | PE32 image            |   N/A    | 00011924 | E3780607 | --------- PE32 image section
+ Section         | Compressed            |   N/A    | 00011CAF | 467198F3 | -------- Compressed section
+ Section         | PE32 image            |   N/A    | 00011924 | 506B90DC | --------- PE32 image section
  Section         | Freeform subtype GUID |   N/A    | 00000361 | 10B88DB2 | --------- OemPir
  Section         | UI                    |   N/A    | 0000001E | FEE46F74 | --------- UI section
  File            | DXE driver            |   N/A    | 000037D9 | 0030E631 | ------- EbcDxe | EBC
@@ -955,28 +955,28 @@
  Section         | UI                    |   N/A    | 00000014 | 2492F092 | --------- UI section
  Free space      |                       |   N/A    | 00000A78 | FC4E6A1F | ------- Volume free space
  Section         | UI                    |   N/A    | 00000022 | 9AEF7991 | ----- UI section
- File            | Raw                   | 005014D0 | 00014C18 | 275013B2 | --- Microcode
- Microcode       | Intel                 | 005014E8 | 00003800 | 7C50E0C6 | ---- Intel microcode
- Microcode       | Intel                 | 00504CE8 | 00005C00 | 887F028B | ---- Intel microcode
- Microcode       | Intel                 | 0050A8E8 | 00005800 | 2F75FA4C | ---- Intel microcode
- Microcode       | Intel                 | 005100E8 | 00006000 | EFEEFF19 | ---- Intel microcode
- File            | Freeform              | 005160E8 | 00048B2B | 99C193CD | --- 8A0A450A-BEE9-42C1-9549-2BB8296AB3C3
- Section         | Compressed            | 00516100 | 00048B13 | 6620FFF5 | ---- Compressed section
+ File            | Raw                   | 00501508 | 00014C18 | 275013B2 | --- Microcode
+ Microcode       | Intel                 | 00501520 | 00003800 | 7C50E0C6 | ---- Intel microcode
+ Microcode       | Intel                 | 00504D20 | 00005C00 | 887F028B | ---- Intel microcode
+ Microcode       | Intel                 | 0050A920 | 00005800 | 2F75FA4C | ---- Intel microcode
+ Microcode       | Intel                 | 00510120 | 00006000 | EFEEFF19 | ---- Intel microcode
+ File            | Freeform              | 00516120 | 00048B2B | 99C193CD | --- 8A0A450A-BEE9-42C1-9549-2BB8296AB3C3
+ Section         | Compressed            | 00516138 | 00048B13 | 6620FFF5 | ---- Compressed section
  Section         | Raw                   |   N/A    | 0016FFE4 | 3820F150 | ----- Raw section
- File            | Freeform              | 0055EC18 | 000861F9 | 69DAE311 | --- CD4275AA-71CD-4146-A723-1A4957F02578
- Section         | Compressed            | 0055EC30 | 000861E1 | C2253A19 | ---- Compressed section
+ File            | Freeform              | 0055EC50 | 000861F9 | 69DAE311 | --- CD4275AA-71CD-4146-A723-1A4957F02578
+ Section         | Compressed            | 0055EC68 | 000861E1 | C2253A19 | ---- Compressed section
  Section         | Raw                   |   N/A    | 000E0EEF | F0923C03 | ----- Raw section
- File            | DXE driver            | 005E4E18 | 000878EF | C635B48E | --- Setup | Setup
- Section         | DXE dependency        | 005E4E30 | 00000016 | 8981F64B | ---- DXE dependency section
- Section         | Compressed            | 005E4E48 | 000878BF | 555ABA37 | ---- Compressed section
+ File            | DXE driver            | 005E4E50 | 000878EF | C635B48E | --- Setup | Setup
+ Section         | DXE dependency        | 005E4E68 | 00000016 | 8981F64B | ---- DXE dependency section
+ Section         | Compressed            | 005E4E80 | 000878BF | 555ABA37 | ---- Compressed section
  Section         | PE32 image            |   N/A    | 00043E04 | EAC992FF | ----- PE32 image section
  Section         | Freeform subtype GUID |   N/A    | 0033D00C | F802A137 | ----- MiniSetupResourceSection
  Section         | UI                    |   N/A    | 00000010 | C755844E | ----- UI section
- File            | PEI module            | 0066C708 | 0000211C | 484B250D | --- S3Resume | S3Restore
- Section         | PEI dependency        | 0066C720 | 00000028 | 2CAB6DA9 | ---- PEI dependency section
- Section         | PE32 image            | 0066C748 | 000020C4 | 7156B244 | ---- PE32 image section
- Section         | UI                    | 0066E80C | 00000018 | 83BC0090 | ---- UI section
- Free space      |                       | 0066E828 | 000917D8 | 6CA8AB06 | --- Volume free space
+ File            | PEI module            | 0066C740 | 0000211C | 12E646C5 | --- S3Resume | S3Restore
+ Section         | PEI dependency        | 0066C758 | 00000028 | 2CAB6DA9 | ---- PEI dependency section
+ Section         | PE32 image            | 0066C780 | 000020C4 | 002245B9 | ---- PE32 image section
+ Section         | UI                    | 0066E844 | 00000018 | 83BC0090 | ---- UI section
+ Free space      |                       | 0066E860 | 000917A0 | 996CC81E | --- Volume free space
  Volume          | FFSv2                 | 00700000 | 00100000 | 9A9DCF1F | -- EfiFirmwareFileSystem2Guid
  File            | PEI module            | 00700048 | 00001B1A | 41142045 | --- TxtPei | TxtPei
  Section         | PEI dependency        | 00700060 | 0000004C | 994747FC | ---- PEI dependency section

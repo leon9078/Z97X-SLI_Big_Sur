@@ -26,7 +26,7 @@ We need this files/softwares:
 Open CMD;
 > cd Documents
 > curl.exe -LJO "https://www.7-zip.org/a/7z2409-x64.exe"
-> curl.exe -LJO "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.7.4/npp.8.7.4.Installer.x64.exe"
+> curl.exe -LJO "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.7.5/npp.8.7.5.Installer.x64.exe"
 > curl.exe -LJO "https://github.com/digitalw0lf/hextor/releases/download/v0.14/HextorSetup.exe"
 > curl.exe -LJO "https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe"
 > curl.exe -LJO "https://download.gigabyte.com/FileList/BIOS/mb_bios_ga-z97x-sli_f10b.zip"
@@ -161,16 +161,20 @@ So the final Attributes value will be 0x44:
 Now, back to CMD;
 > GenFfs --outputfile Updated_CPU_Microcodes.ffs --filetype EFI_FV_FILETYPE_RAW --fileguid "17088572-377F-44EF-8F4E-B09FFF46A070" --fixed --checksum --sectionfile cpu40671_plat22_ver00000022_2019-11-12_PRD_00B9F4B1.bin --sectionfile cpu306C3_plat32_ver00000028_2019-11-12_PRD_DBD4CFD1.bin --sectionfile cpu306C2_plat32_verFFFF0006_2012-10-17_PRE_30531EB4.bin --sectionfile cpu306C1_plat32_verFFFF0014_2012-07-25_PRE_E86E3EB1.bin --verbose
 
+> del cpu40671_plat22_ver00000022_2019-11-12_PRD_00B9F4B1.bin cpu306C3_plat32_ver00000028_2019-11-12_PRD_DBD4CFD1.bin cpu306C2_plat32_verFFFF0006_2012-10-17_PRE_30531EB4.bin cpu306C1_plat32_verFFFF0014_2012-07-25_PRE_E86E3EB1.bin
+
 The result ffs file will be used to replace the corresponding modules with MMTool.
 
 Now, let's work on ACPI.
 
 I'm going to install a hackintosh on this board, so I will use OpenCore > ACPI > Patch to create "proxy" patches, where the original method is patched in the original table and is implemented in the patched table.
 My board is an Intel 9-series model, so it has USB EHCI controllers. Since OS X 10.11, the recommended behavior it to disable the default injectors in order not to match the ACPI names on the original MAC model (EHC1, EHC2, XHC1).
-My XHCI controller is already named "XHC", so it will not match for XHC1. I need to rename EHC1 to EH01 and EHC2 to EH02. This type of patch changes the ACPI name of the USB controllers globally (to every operating system), so it's not possible to use "_OSI" to specify only for macOS.
+My XHCI controller is already named "XHC", so it will not match for XHC1. But I want to rename it to "XHC0" in order to have 4-char ACPI name instead of 3.
+As RehabMan says here (https://www.tonymacx86.com/threads/guide-using-clover-to-hotpatch-acpi.200137/) => "All ACPI identifiers are 4 characters. Shorter names are padded with underscore. So, for example, XHC is represented in the AML binary as XHC_, EC would be EC__, EC0 would be EC_, MEI would be MEI_, etc."
+Then, I need to rename EHC1 to EH01 and EHC2 to EH02. This type of patches changes the ACPI name of the USB controllers globally (to every operating system), so it's not possible to use "_OSI" to specify only for macOS.
 This is a global rename and not a Method to hotpatch... Moreover, this rename will not harm any other OS (Windows, Linux, etc.).
-In my specific board, USB EHCI controllers are defined in DSDT and not in any other SSDT.
-So the idea is to create a custom DSDT table with the above renames and then insert directly into the BIOS!
+In my specific board, USB controllers (both EHCI and XHCI) are defined in DSDT and not in any other SSDT.
+So the idea is to create a custom DSDT table with the above renames and then insert directly into the BIOS image!
 
 We need to extract the original DSDT from the BIOS. To do so open UEFITool and open the BIOS file. We need to find in which module the DSDT is located in.
 Action > Search... > Text > "EHC", uncheck "Unicode", check "Case sensitive". There are 20 results, being inside AmiBoardInfo/.../PE32 image section. 11 for EHC1 and 9 for EHC2.
@@ -188,8 +192,11 @@ In the right part of Hextor, click on "Bookmarks", then click the "+" icon to cr
 
 Now we can proceed to make our Find/Replace edits.
 
-Search > Find/Replace... > Find: EHC > Text > List. Search pattern found 20 time(s) > OK
-Expand "Replace" section; Replace with: EH0 > Replace all. Search pattern replaced 20 time(s) > OK
+Search > Find/Replace... > Find: XHC_ > Text > List. Search pattern found 53 time(s) > OK
+Expand "Replace" section; Replace with: XHC0 > Replace all. Search pattern replaced 53 time(s) > OK
+
+Find: EHC > Text > List. Search pattern found 20 time(s) > OK
+Replace with: EH0 > Replace all. Search pattern replaced 20 time(s) > OK
 Close Find/Replace window.
 
 
@@ -217,55 +224,42 @@ As before; Search > Go To address... > 2653; Search > Go To address... > +9
 The original "Checksum" value is 0xDC.
 
 Now the description of the Checksum field is: "Entire table must sum to zero.". This checksum is an 8-bit checksum (https://minuszerodegrees.net/misc/8-bit%20checksum.htm)
-So we basically made 2 edits:
-1) Find/Replace 20 instances of "EHC" to "EH0", actually we just replaced 1 character: the letter "C" with the number "0" 20 times.
-2) Increase "OEM Revision" value by 1.
+So we basically made 3 edits:
+1) Find/Replace 53 instances of "XHC_" to "XHC0", actually we just replaced 1 character: the character "_" with the number "0" 53 times.
+2) Find/Replace 20 instances of "EHC" to "EH0", actually we just replaced 1 character: the letter "C" with the number "0" 20 times.
+3) Increase "OEM Revision" value by 1, actually we just replaced 1 character: the number "0x88" with the number "0x89" 1 time.
+
+"_" and "0" are ASCII and the entire checksum is calculated in HEX.
+ASCII: "_" > HEX: 0x5F
+ASCII: "0" > HEX: 0x30
+
+From 0x5F to 0x30 there are 0x2F bytes to subtract (-0x2F).
 
 "C" and "0" are ASCII and the entire checksum is calculated in HEX.
 ASCII: "C" > HEX: 0x43
 ASCII: "0" > HEX: 0x30
 
 From 0x43 to 0x30 there are 0x13 bytes to subtract (-0x13).
-Remember, "Entire table must sum to zero.", so we need to add 0x13 bytes (+0x13) to the original checksum value (0xDC).
-But this is for 1 result, we need to made the sum 20 times! This is in detail how the change is made.
 
-n times | diff checksum sum | result
-   01        0xDC + 0x13    = 0xEF
-   02        0xEF + 0x13    = 0x102 // Since this is an 8-bit checksum we need to keep only the least significant 8 bits. So the result is 0x02
-   03        0x02 + 0x13    = 0x15
-   04        0x15 + 0x13    = 0x28
-   05        0x28 + 0x13    = 0x3B
-   06        0x3B + 0x13    = 0x4E
-   07        0x4E + 0x13    = 0x61
-   08        0x61 + 0x13    = 0x74
-   09        0x74 + 0x13    = 0x87
-   10        0x87 + 0x13    = 0x9A
-   11        0x9A + 0x13    = 0xAD
-   12        0xAD + 0x13    = 0xC0
-   13        0xC0 + 0x13    = 0xD3
-   14        0xD3 + 0x13    = 0xE6
-   15        0xE6 + 0x13    = 0xF9
-   16        0xF9 + 0x13    = 0x10C => 0x0C
-   17        0x0C + 0x13    = 0x1F
-   18        0x1F + 0x13    = 0x32
-   19        0x32 + 0x13    = 0x45
-   20        0x45 + 0x13    = 0x58 <= final checksum!
+Remember, "Entire table must sum to zero.", so we need to add
+1) 0x2F bytes (+0x2F) * 0x35 (53 times); "XHC_" to "XHC0"
+2) 0x13 bytes (+0x13) * 0x14 (20 times); "EHC" to "EH0"
+to the original checksum value (0xDC).
 
-This is the final checksum for the entire EHC to EH0 edit.
+XHC total edits: 0x2F * 0x35 = 0x9BB
+EHC total edits: 0x13 * 0x14 = 0x17C
 
-But remember, we also increased the "OEM Revision" by 1!
-So we have to remove -1 from that Checksum. 0x58 - 0x01 = 0x57
-Final Checksum will be 0x57!!!
+Sum them: 0x9BB + 0x17C = 0xB37
+
+Remember, we also increased the "OEM Revision" value by 1!
+So we have to remove -1 from that sum value. 0xB37 - 0x01 = 0xB36
+
+Now sum the original Checksum value (0xDC) with 0xB36 = 0xC12 // 8-bit checksum (select the least significant 8-bit)
+So, the final Checksum is 0x12!!!
 
 
 
-So the final DSDT checksum is 0x57!
-To reach this value faster, we can do this way. 20 is the number of instances for Find/Replace in our traditional decimal system. We need to think in HEX system, so we have to convert this value (20) in HEX format.
-DEC: 20 > HEX 0x14
-We multiply 0x13 (diff size) by 0x14, result = 0x17C
-Now we sum original DSDT checksum (0xDC) with 0x17C minus 0x01 (OEM Revision increased), result = 0x257; select the least significant 8 bits = 0x57
-
-Back in Hextor; Edit > Select Range... > Range end: +1; Operations > Insert bytes / Fill selection > Hex Pattern: 57 > OK
+Back in Hextor; Edit > Select Range... > Range end: +1; Operations > Insert bytes / Fill selection > Hex Pattern: 12 > OK
 
 
 Now we have to check if FFS "Attributes" has the "FFS_ATTRIB_CHECKSUM" bit set (0x40) and/or "Data checksum" has a value different than AA.
@@ -284,13 +278,14 @@ The data checksum value is located inside ffs file header at offset 11h
       - File                   0x11        (1 byte)
 
 In Hextor; Search > Go To address... > 0x11. Value is 0x25
-Now there are 22 bytes changed:
+Now there are 75 bytes changed:
+53x XHC_ to XHC0          (0x5F to 0x30) = -0x2F * 0x35 = -0x9BB
 20x EHC to EH0            (0x43 to 0x30) = -0x13 * 0x14 = -0x17C
  1x OEM Revision increase (0x88 to 0x89) = +0x01
- 1x New DSDT checksum     (0xDC to 0x57) = -0x85
+ 1x New DSDT checksum     (0xDC to 0x12) = -0xCA
 
--0x17C + 0x01 - 0x85 = -0x200
-0x25 + 0x200 = 0x225, select the least significant 8 bits = 0x25
+-0x9BB - 0x17C + 0x01 - 0xCA = -0xC00
+0x25 + 0xC00 = 0xC25, select the least significant 8 bits = 0x25
 
 So in this case the data checksum value remains the same (0x25)
 
@@ -386,7 +381,7 @@ So, in UEFITool, select "DXE dependency section", check on the right:
 - "Offset", it says "18h"
 - "Full size", it says "16h (22)"
 
-In Hextor; Go To address... > 0x18, then Edit > Select Range... > Range end: +22. On the right, click on the "+" sign to create the 1st bookmark.
+In Hextor; Search > Go To address... > 0x18, then Edit > Select Range... > Range end: +22. On the right, click on the "+" sign to create the 1st bookmark.
 
 Back in UEFITool select "PE32 image section", right click "Hex view...", select the first 16 HEX bytes from offset 00000000, Ctrl+C to copy, close the Hex view window.
 Back in Hextor; Search > Find/Replace... > Ctrl+V > HEX > Find next >> > << Find prev. Close the Find/Replace window.
@@ -471,7 +466,7 @@ Back to CMD;
 
 Now, open MMTool again. "Load image" > OEM BIOS file. "Delete" tab. Volume: 01 Index: 04 FileName: Setup. Delete. "Insert" tab, browse the new ffs file just created, "Insert Compressed", Insert. "Save Image as.." > "temporary" > Save. Close.
 
-When inserting modules MMTool will add it at the end of the module, so before Setup was at offset 04 (before S3Restore), now at offset 05 (after S3Restore).
+When inserting modules, MMTool will add it at the end of the module, so before Setup was at offset 04 (before S3Restore), now at offset 05 (after S3Restore).
 
 Open MMTool again, load "temporary.fd". "Extract" tab, select Volume: 01 Index: 05 FileName: Setup. Give it a name like "04-Setup_Asis_Tiano_no_DXE_dep_ACPI_Debug.ffs". Extract As is, Extract. Close.
 
