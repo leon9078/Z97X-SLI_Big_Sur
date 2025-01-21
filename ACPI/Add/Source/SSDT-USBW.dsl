@@ -6,7 +6,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "USBW", 0x00000000)
     {
         Device (USBW)
         {
-            Name (_HID, "PNP0D10")  // _HID: Hardware ID
+            Name (_HID, EisaId ("PNP0D10"))  // _HID: Hardware ID
             Name (_UID, "WAKE")  // _UID: Unique ID
             Method (_STA, 0, NotSerialized)  // _STA: Status
             {

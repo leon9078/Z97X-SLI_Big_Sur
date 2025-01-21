@@ -1,7 +1,7 @@
 # Z97X-SLI_Big_Sur
 hackintosh stuff
 
-Pre requirement: Update the BIOS with my custom modifications "Z97XSLI.fd". Find the guide in Final_guide.txt
+Pre requirement: Update the BIOS with my custom modifications "Z97XSLI.fd". Find the guide in Bios_mod_guide.txt
 
 BIOS settings:
 
@@ -9,7 +9,6 @@ BIOS settings:
 - Bootup NumLock State: Disabled
 - Full Screen LOGO Show: Disabled
 - Windows 8 Features: Windows 8
-- CSM Support: Always
 - Boot Mode Selection: UEFI Only
 - Storage Boot Option Control: UEFI Only
 - Ipv4 PXE Support: Disabled
@@ -18,8 +17,6 @@ BIOS settings:
 - Legacy USB Support: Disabled
 - Serial Port A: Disabled
 - Parallel Port: Disabled
-- Intel(R) Ethernet Network Connection i217-V => NIC Configuration => Wake on LAN: Disabled
-- Wake on LAN: Disabled
 
 Post install:
 
@@ -30,10 +27,10 @@ Insert Arch Linux USB installer, boot from it F12 key
 - mount /dev/sdX1 /mnt
 - nano -c /mnt/EFI/OC/config.plist
 
-1. Misc > Boot > "LauncherOption" > "Disabled" => "Full"
-2. Misc > Security > "ScanPolicy" > 0 => 65795
-3. Misc > Tools > [0] (OpenShell) > Enabled > YES => NO
-4. UEFI > Drivers > [1] (ResetNvramEntry) > Enabled > YES => NO
+1. Misc > Boot > "LauncherOption" from "Disabled" to "Full"
+2. Misc > Security > "ScanPolicy" from 0 to 65795
+3. Misc > Tools > [1] (UEFI Shell) > Enabled from YES to NO
+4. UEFI > Drivers > [1] (ResetNvramEntry) > Enabled from YES to NO
 
 Save (Ctrl+O), then exit (Ctrl+X)
 - sync
@@ -85,4 +82,4 @@ Unplug Arch Linux USB installer drive, done. Enojy your new hackintosh!
 SSDTs that I'm no longer using are:
 
 - SSDT-NVAU. This creates a fake "class-code" 0xFFFFFFFF to the NVIDIA HDMI Audio device, in order to completely disable dGPU audio in macOS and prevent Kernel Panic.
-- SSDT-RMB3. Disable Intel HDMI audio, when running without dGPU.
+- SSDT-RMB3. Disable Intel HDMI audio, when running without dGPU. ! WARNING ! if you use 2 monitors this SSDT will disable the second one, so I don't recommend using this SSDT.

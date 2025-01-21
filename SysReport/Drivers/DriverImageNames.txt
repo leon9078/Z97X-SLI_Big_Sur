@@ -1,6 +1,6 @@
 PCH Serial ATA Controller Initialization Driver
 Intel(R) GOP Driver [5.5.1032]
-AMI File System Driver
+FAT File System Driver
 Intel(R) 1GbE DEV 5.1.00 PCI-E 
 ARP Network Service Driver
 MNP Network Service Driver

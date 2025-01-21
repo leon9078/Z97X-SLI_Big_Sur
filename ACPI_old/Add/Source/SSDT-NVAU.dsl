@@ -21,7 +21,7 @@ DefinitionBlock ("", "SSDT", 2, "HACK", "NVAU", 0x00000000)
             {
                 If (_OSI ("Darwin"))
                 {
-                    If (LNotEqual (Arg2, Zero))
+                    If (LEqual (Arg2, Zero))
                     {
                         Return (Buffer (One)
                         {
